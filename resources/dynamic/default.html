@@ -1,0 +1,25 @@
+﻿<div id="adc_{%= CurrentADC.InstanceId %}" class="adc-autocomplete">
+    {% 
+    Dim inputId
+    Dim inputName
+    Dim inputValue
+	Dim inputSearchValue = ""
+	Dim autofocus = ""
+    If (CurrentADC.PropValue("autofocus") = "autofocus") Then
+        autofocus = "autofocus"
+    EndIf
+    Dim ar = CurrentQuestion.ParentLoop.AvailableResponses
+    Dim i
+    For i = 1 To ar.Count
+    inputName = CurrentQuestion.Iteration(ar[i].Index).InputName()
+    inputId   = inputName
+    inputValue = CurrentQuestion.Iteration(ar[i].Index).InputValue()
+    If (ar[i].Caption = CurrentADC.PropValue("searchField")) Then
+        inputSearchValue = CurrentQuestion.Iteration(ar[i].Index).InputValue()
+    EndIf
+    %}
+    <input id="{%= inputId %}" class="autocomplete hiddens" type="text" name="{%= inputName%}" value="{%= inputValue %}" />
+    {% Next i%}
+    <br />
+    <input id="adc_{%= CurrentADC.InstanceId %}_input" class="autocomplete" {%= autofocus %} type="text" name="adc_{%= CurrentADC.InstanceId %}_input" placeholder="{%:= CurrentADC.PropValue("placeholder") %}" value="{%= inputSearchValue %}" />
+</div>

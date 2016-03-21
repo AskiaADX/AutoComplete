@@ -1,0 +1,91 @@
+﻿{%
+Dim controlAlign
+If (CurrentADC.PropValue("controlAlign") = "center" ) Then
+    controlAlign = "0 auto"
+ElseIf (CurrentADC.PropValue("controlAlign") = "right" ) Then
+    controlAlign = "0 0 0 auto"
+Else
+    controlAlign = "0 auto 0 0"
+EndIf
+Dim borderColor = CurrentADC.PropValue("borderColor")
+Dim borderThickness = CurrentADC.PropValue("borderThickness")
+Dim borderStyle = CurrentADC.PropValue("borderStyle")
+Dim borderColorHover = CurrentADC.PropValue("borderColorHover")
+Dim borderThicknessHover = CurrentADC.PropValue("borderThicknessHover")
+Dim borderStyleHover = CurrentADC.PropValue("borderStyleHover")
+Dim borderColorFocus = CurrentADC.PropValue("borderColorFocus")
+Dim borderThicknessFocus = CurrentADC.PropValue("borderThicknessFocus")
+Dim borderStyleFocus = CurrentADC.PropValue("borderStyleFocus")
+Dim borderColorSuggestions = CurrentADC.PropValue("borderColorSuggestions")
+Dim borderThicknessSuggestions = CurrentADC.PropValue("borderThicknessSuggestions")
+Dim borderStyleSuggestions = CurrentADC.PropValue("borderStyleSuggestions")
+%}
+
+/*
+* Control
+*/
+#adc_{%= CurrentADC.InstanceId %}, #adc_{%= CurrentADC.InstanceId %} .autocomplete {
+    max-width: {%:= CurrentADC.PropValue("inputsWidth")%};
+}
+#adc_{%= CurrentADC.InstanceId %} {
+    margin: {%= controlAlign %};
+}
+/*
+* Input
+*/
+#adc_{%= CurrentADC.InstanceId %} .autocomplete, .adc_{%= CurrentADC.InstanceId %} {
+    text-align: {%:= CurrentADC.PropValue("textAlign")%};
+    border-radius: {%:= CurrentADC.PropValue("borderRadius")%};
+}
+#adc_{%= CurrentADC.InstanceId %} .autocomplete {
+    background-color: {%= CurrentADC.PropValue("backgroundColor").ToHexa() %};
+    color: {%= CurrentADC.PropValue("color").ToHexa() %};
+    {% If (borderThickness = "none") Then %}
+    border: none;
+    {% Else %}
+    border: {%= borderThickness %} {%= borderStyle %} {%= borderColor.ToHexa() %};
+    {% EndIf %}
+    transition: all ease-in-out .3s;
+}
+#adc_{%= CurrentADC.InstanceId %} .autocomplete:hover {
+    background-color: {%= CurrentADC.PropValue("backgroundColorHover").ToHexa() %};
+    color: {%= CurrentADC.PropValue("colorHover").ToHexa() %};
+    {% If (borderThicknessHover = "none") Then %}
+    border: none;
+    {% Else %}
+    border: {%= borderThicknessHover %} {%= borderStyleHover %} {%= borderColorHover.ToHexa() %};
+    {% EndIf %}
+}
+#adc_{%= CurrentADC.InstanceId %} .autocomplete:focus, #adc_{%= CurrentADC.InstanceId %} .autocomplete:active {
+    background-color: {%= CurrentADC.PropValue("backgroundColorFocus").ToHexa() %};
+    color: {%= CurrentADC.PropValue("colorFocus").ToHexa() %};
+    {% If (borderThicknessFocus = "none") Then %}
+    border: none;
+    {% Else %}
+    border: {%= borderThicknessFocus %} {%= borderStyleFocus %} {%= borderColorFocus.ToHexa() %};
+    {% EndIf %}
+}
+/**
+* Suggestions
+*/
+.adc_{%= CurrentADC.InstanceId %} {
+    background-color: {%= CurrentADC.PropValue("backgroundColorSuggestions").ToHexa() %};
+    {% If (borderThicknessSuggestions = "none") Then %}
+    border: none;
+    {% Else %}
+    border: {%= borderThicknessSuggestions %} {%= borderStyleSuggestions %} {%= borderColorSuggestions.ToHexa() %};
+    {% EndIf %}
+}
+.adc_{%= CurrentADC.InstanceId %} .autocomplete-suggestion {
+    color: {%= CurrentADC.PropValue("colorSuggestions").ToHexa() %};
+}
+.adc_{%= CurrentADC.InstanceId %} .autocomplete-suggestion b {
+    color: {%= CurrentADC.PropValue("colorSearchSuggestions").ToHexa() %};
+}
+.adc_{%= CurrentADC.InstanceId %} .autocomplete-suggestion.selected {
+    background-color: {%= CurrentADC.PropValue("backgroundColorSuggestionsHover").ToHexa() %};
+    color: {%= CurrentADC.PropValue("colorSuggestionsHover").ToHexa() %};
+}
+.adc_{%= CurrentADC.InstanceId %} .autocomplete-suggestion.selected b {
+    color: {%= CurrentADC.PropValue("colorSearchSuggestionsHover").ToHexa() %};
+}

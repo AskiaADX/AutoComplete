@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<control  xmlns="http://www.askia.com/ADCSchema"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://www.askia.com/ADCSchema http://www.askia.com/Downloads/dev/schemas/adc2.0/Config.xsd"
+          version="2.0.0"
+          askiaCompat="5.3.3">
+  <info>
+    <name>adc2-autoComplete</name>
+    <guid>4b7058ef-4656-4aa4-ae9c-269c8a2810f8</guid>
+    <version>1.0.0</version>
+    <date>2016-03-21</date>
+    <description><![CDATA[autoComplete: open text box with search capability as google search]]></description>
+    <company>Askia</company>
+    <author><![CDATA[Jérôme Duparc <jeromed@askia.com>]]></author>
+    <site>http://www.askia.com</site>
+    <helpURL></helpURL>
+    <categories>
+      <category>General</category>
+    </categories>
+    <style width="400" height="300" />
+    <constraints>
+      <constraint on="questions" chapter="false" single="false" multiple="false" numeric="false" date="false" open="true" requireParentLoop="true" />
+      <constraint on="controls" responseblock="true" label="false" textbox="false" checkbox="false" listbox="false" radiobutton="false" />
+      <constraint on="responses" max="*" min="*" />
+    </constraints>
+  </info>
+  <outputs defaultOutput="default">
+    <output id="default">
+      <description><![CDATA[Javascript is enable]]></description>
+      <condition><![CDATA[browser.support("Javascript")]]></condition>
+      <content fileName="auto-complete.css" type="css" mode="static" position="head" />
+      <content fileName="styles.css" type="css" mode="dynamic" position="head" />
+      <content fileName="default.html" type="html" mode="dynamic" position="placeholder" />
+      <content fileName="auto-complete.js" type="javascript" mode="static" position="foot" />
+      <content fileName="IncludeDatabase.html" type="html" mode="dynamic" position="foot" />
+      <content fileName="Initializer.js" type="javascript" mode="dynamic" position="foot" />
+    </output>
+    <output id="fallback">
+      <description><![CDATA[Javascript is not enable]]></description>
+      <condition><![CDATA[not(Browser.Support("javascript"))]]></condition>
+      <content fileName="NotSupportedBrowser.html" type="html" mode="dynamic" position="placeholder" />
+    </output>
+  </outputs>
+  <properties>
+    <category id="General" name="General">
+      <property xsi:type="standardProperty" id="database" name="Javascript database file path" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Path of the Javascript database file to include in the document]]></description>
+        <value><![CDATA[??ResPath??data.js]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="databaseName" name="Database name" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Name of the database]]></description>
+        <value><![CDATA[DATABASENAME]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="searchField" name="Search field" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[It indicates in which field name to search]]></description>
+        <value><![CDATA[SEARCHFIELD]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="minChars" name="Min characters" type="number" mode="dynamic" require="true" visible="true" min="1">
+        <description><![CDATA[Indicates the minimum number of characters before to perform the search]]></description>
+        <value><![CDATA[1]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="responseInList" name="Response must match" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[The response must match one of the responses of the database]]></description>
+        <value><![CDATA[1]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="2" text="Non" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="inputsWidth" name="Width of inputs" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Width of the inputs, you can also specified the unit (pixel by default)]]></description>
+        <value><![CDATA[400px]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="controlAlign" name="Control Alignment" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[The alignment of the control]]]></description>
+        <value><![CDATA[left]]></value>
+        <options>
+          <option value="left" text="Left" />
+          <option value="center" text="Center" />
+          <option value="right" text="Right" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="textAlign" name="Text Alignment" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[The alignment of the text in the input and suggestions]]></description>
+        <value><![CDATA[left]]></value>
+        <options>
+          <option value="left" text="Left" />
+          <option value="center" text="Center" />
+          <option value="right" text="Right" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="borderRadius" name="Border Radius" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[The amount of curve on the input and suggestions corners]]></description>
+        <value><![CDATA[2px]]></value>
+        <options>
+          <option value="0px" text="0" />
+          <option value="2px" text="2" />
+          <option value="5px" text="5" />
+          <option value="10px" text="10" />
+          <option value="15px" text="15" />
+          <option value="20px" text="20" />
+          <option value="25px" text="25" />
+          <option value="30px" text="30" />
+          <option value="50px" text="50" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="placeholder" name="Placeholder" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Short hint that describes the expected value]]></description>
+        <value><![CDATA[...]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="autofocus" name="Autofocus" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Autofocus on the text box]]></description>
+        <value><![CDATA[no]]></value>
+        <options>
+          <option value="autofocus" text="Yes" />
+          <option value="no" text="No" />
+        </options>
+      </property>
+    </category>
+    <category id="input" name="Input">
+      <property xsi:type="standardProperty" id="backgroundColor" name="Background Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+        <description><![CDATA[Background color of the input]]></description>
+        <value><![CDATA[247,247,247]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="color" name="Font Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+        <description><![CDATA[Font color of the input]]></description>
+        <value><![CDATA[68,68,68]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="borderColor" name="Border Color" type="color" require="true" visible="true" colorFormat="rgb">
+        <description><![CDATA[The border colour around the input]]></description>
+        <value><![CDATA[204,204,204]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="borderThickness" name="Border Thickness" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[The thickness of the border around the input]]></description>
+        <value><![CDATA[1px]]></value>
+        <options>
+          <option value="none" text="None" />
+          <option value="1px" text="1px" />
+          <option value="2px" text="2px" />
+          <option value="3px" text="3px" />
+          <option value="4px" text="4px" />
+          <option value="5px" text="5px" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="borderStyle" name="Border Style" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[The style of the border around the input]]></description>
+        <value><![CDATA[solid]]></value>
+        <options>
+          <option value="none" text="None" />
+          <option value="solid" text="Solid" />
+          <option value="dashed" text="Dashed" />
+          <option value="dotted" text="Dotted" />
+          <option value="double" text="Double" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="backgroundColorHover" name="Hover Background Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+        <description><![CDATA[Background color of the input when hovered over]]></description>
+        <value><![CDATA[255,255,255]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="colorHover" name="Hover Font Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+        <description><![CDATA[Font color of the input when hovered over]]></description>
+        <value><![CDATA[68,68,68]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="borderColorHover" name="Hover Border Color" type="color" require="true" visible="true" colorFormat="rgb">
+        <description><![CDATA[The border colour around the input when hovered over]]></description>
+        <value><![CDATA[187,187,187]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="borderThicknessHover" name="Hover Border Thickness" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[The thickness of the border around the input when hovered over]]></description>
+        <value><![CDATA[1px]]></value>
+        <options>
+          <option value="none" text="None" />
+          <option value="1px" text="1px" />
+          <option value="2px" text="2px" />
+          <option value="3px" text="3px" />
+          <option value="4px" text="4px" />
+          <option value="5px" text="5px" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="borderStyleHover" name="Hover Border Style" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[The style of the border around the input when hovered over]]></description>
+        <value><![CDATA[solid]]></value>
+        <options>
+          <option value="none" text="None" />
+          <option value="solid" text="Solid" />
+          <option value="dashed" text="Dashed" />
+          <option value="dotted" text="Dotted" />
+          <option value="double" text="Double" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="backgroundColorFocus" name="Focus Background Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+        <description><![CDATA[Background color of the input when focused]]></description>
+        <value><![CDATA[255,255,255]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="colorFocus" name="Focus Font Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+        <description><![CDATA[Font color of the input when focused]]></description>
+        <value><![CDATA[68,68,68]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="borderColorFocus" name="Focus Border Color" type="color" require="true" visible="true" colorFormat="rgb">
+        <description><![CDATA[The border colour around the input when focused]]></description>
+        <value><![CDATA[0,147,234]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="borderThicknessFocus" name="Focus Border Thickness" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[The thickness of the border around the input when focused]]></description>
+        <value><![CDATA[1px]]></value>
+        <options>
+          <option value="none" text="None" />
+          <option value="1px" text="1px" />
+          <option value="2px" text="2px" />
+          <option value="3px" text="3px" />
+          <option value="4px" text="4px" />
+          <option value="5px" text="5px" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="borderStyleFocus" name="Focus Border Style" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[The style of the border around the input when focused]]></description>
+        <value><![CDATA[solid]]></value>
+        <options>
+          <option value="none" text="None" />
+          <option value="solid" text="Solid" />
+          <option value="dashed" text="Dashed" />
+          <option value="dotted" text="Dotted" />
+          <option value="double" text="Double" />
+        </options>
+      </property>
+    </category>
+    <category id="suggestions" name="Suggestions">
+      <property xsi:type="standardProperty" id="backgroundColorSuggestions" name="Suggest Background Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+        <description><![CDATA[The background color of the suggestions box]]></description>
+        <value><![CDATA[255,255,255]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="colorSuggestions" name="Suggest Font Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+        <description><![CDATA[The font color of the suggestions]]></description>
+        <value><![CDATA[51,51,51]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="colorSearchSuggestions" name="Suggest Search Font Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+        <description><![CDATA[The font color of the search terms of the suggestions]]></description>
+        <value><![CDATA[0,147,234]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="borderColorSuggestions" name="Suggest Border Color" type="color" require="true" visible="true" colorFormat="rgb">
+        <description><![CDATA[The border colour around the suggestions]]></description>
+        <value><![CDATA[204,204,204]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="borderThicknessSuggestions" name="Suggest Border Thickness" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[The thickness of the border around the suggestions]]></description>
+        <value><![CDATA[1px]]></value>
+        <options>
+          <option value="none" text="None" />
+          <option value="1px" text="1px" />
+          <option value="2px" text="2px" />
+          <option value="3px" text="3px" />
+          <option value="4px" text="4px" />
+          <option value="5px" text="5px" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="borderStyleSuggestions" name="Suggest Border Style" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[The style of the border around the suggestions]]></description>
+        <value><![CDATA[solid]]></value>
+        <options>
+          <option value="none" text="None" />
+          <option value="solid" text="Solid" />
+          <option value="dashed" text="Dashed" />
+          <option value="dotted" text="Dotted" />
+          <option value="double" text="Double" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="backgroundColorSuggestionsHover" name="Hover Suggest Background Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+        <description><![CDATA[The background color of the suggestions when hovered over]]></description>
+        <value><![CDATA[0,147,234]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="colorSuggestionsHover" name="Hover Suggest Font Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+        <description><![CDATA[The font color of the suggestions when hovered over]]></description>
+        <value><![CDATA[255,255,255]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="colorSearchSuggestionsHover" name="Hover Suggest Search Font Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+        <description><![CDATA[The font color of the search terms of the suggestions when hovered over]]></description>
+        <value><![CDATA[221,221,221]]></value>
+      </property>
+    </category>
+    <category id="fallBackNotSupportedBrowser" name="Not supported browser">
+      <property xsi:type="standardProperty" id="notSupportedBrowser" name="Not supported browser" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Message to display to the non-supported browser]]></description>
+        <value><![CDATA[Sorry this page uses Javascript code, please enable it.]]></value>
+      </property>
+    </category>
+  </properties>
+</control>

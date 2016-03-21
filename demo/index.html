@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>adc2-autoComplete</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="auto-complete.css">
+    <style>
+      /*
+      * Control
+      */
+      #adc_1, #adc_1 .autocomplete {
+         max-width: 400px;
+      }
+      #adc_1 {
+         margin: 0 auto;
+      }
+      /*
+      * Input
+      */
+      #adc_1 .autocomplete, .adc_1 {
+         text-align: left;
+         border-radius: 2px;
+      }
+      #adc_1 .autocomplete {
+         background-color: #F7F7F7;
+         border: 1px solid #CCCCCC;
+         transition: all ease-in-out .4s;
+      }
+      #adc_1 .autocomplete:hover {
+         background-color: #FFFFFF;
+         border-color: #BBBBBB;
+      }
+      #adc_1 .autocomplete:focus, #adc_1 .autocomplete:active {
+         background-color: #FFFFFF;
+         border-color: #0093EA;
+      }
+      /**
+      * Suggestions
+      */
+      .adc_1 {
+         background-color: #FFFFFF;
+         border: 1px solid #CCCCCC;
+      }
+      .adc_1 .autocomplete-suggestion {
+         color: #333333;
+      }
+      .adc_1 .autocomplete-suggestion b {
+         color: #0093EA;
+      }
+      .adc_1 .autocomplete-suggestion.selected {
+         background: #0093EA;
+         color: #FFFFFF;
+      }
+      .adc_1 .autocomplete-suggestion.selected b {
+         color: #DDDDDD;
+      }
+    </style>
+</head>
+<body>
+   <div id="adc_1" class="adc-autocomplete">
+      <input id="S1" class="autocomplete" type="text" name="S1" value="50" /><br />
+      <input id="S2" class="autocomplete" type="text" name="S2" value="BOURG SAINT CHRISTOPHE" /><br />
+      <input id="adc_1_input" class="autocomplete" autofocus type="text" name="adc_1_input" placeholder="Town ..." value="BOURG SAINT CHRISTOPHE" />
+   </div>
+   <script src="auto-complete.js"></script>
+   <script type="text/javascript" src="TOWN.js"></script>
+   <script>
+       (function () {
+           var demo1 = new autoComplete({
+               menuClass: 'adc_1',
+               selector: '#adc_1_input',
+               minChars: 1,
+               responseInList: 1,
+               searchField: 'VILLE',
+               databaseName: 'DATABASE',
+               dataFields: function() {
+                   var fields = [];
+                   for(var key in autoComplete.databases[this.databaseName][0]){
+                       fields.push(key);
+                   }
+                   return fields;
+               },
+               inputIds: ["S1","S2"],
+               source: function(term, suggest){
+                   term = term.toLowerCase();
+                   var i = 0;
+                   var choices = autoComplete.databases[this.databaseName];
+                   var suggestions = [];
+                   var completeData = [];
+                   for (i = 0; n = choices.length, i < n;i++) {
+                       if (~choices[i][this.searchField].toLowerCase().indexOf(term)) {
+                           suggestions.push(choices[i][this.searchField]);
+                           completeData.push(JSON.stringify(choices[i]).replace(/"/g, "#"));
+                       }
+                   }
+                   suggest(suggestions,completeData);
+               }
+           });
+       } ());
+    </script>
+</body>
+</html>
