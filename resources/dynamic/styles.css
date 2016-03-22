@@ -1,4 +1,4 @@
-﻿{%
+{%
 Dim controlAlign
 If (CurrentADC.PropValue("controlAlign") = "center" ) Then
     controlAlign = "0 auto"

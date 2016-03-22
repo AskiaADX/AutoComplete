@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     var autocomplete = new autoComplete({
         menuClass: 'adc_{%= CurrentADC.InstanceId %}',
         selector: '#adc_{%= CurrentADC.InstanceId %}_input',
