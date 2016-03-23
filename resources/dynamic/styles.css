@@ -30,6 +30,9 @@ Dim borderStyleSuggestions = CurrentADC.PropValue("borderStyleSuggestions")
 #adc_{%= CurrentADC.InstanceId %} {
     margin: {%= controlAlign %};
 }
+#adc_{%= CurrentADC.InstanceId %} .autocomplete, .adc_{%= CurrentADC.InstanceId %} .autocomplete-suggestion {
+    font-size: {%:= CurrentADC.PropValue("fontSize") %};
+}
 /*
 * Input
 */

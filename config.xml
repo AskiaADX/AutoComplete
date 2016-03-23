@@ -89,6 +89,10 @@
           <option value="right" text="Right" />
         </options>
       </property>
+      <property xsi:type="standardProperty" id="fontSize" name="Font Size" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[The font size of the control]]></description>
+        <value><![CDATA[16px]]></value>
+      </property>
       <property xsi:type="standardProperty" id="borderRadius" name="Border Radius" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[The amount of curve on the input and suggestions corners]]></description>
         <value><![CDATA[2px]]></value>
