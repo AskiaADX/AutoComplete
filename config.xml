@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<control  xmlns="http://www.askia.com/ADCSchema"
+<control  xmlns="http://www.askia.com/2.1.0/ADCSchema"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://www.askia.com/ADCSchema http://www.askia.com/Downloads/dev/schemas/adc2.0/Config.xsd"
-          version="2.0.0"
-          askiaCompat="5.3.3">
+          xsi:schemaLocation="http://www.askia.com/2.1.0/ADCSchema https://raw.githubusercontent.com/AskiaADX/ADXSchema/2.1.0/ADCSchema.xsd"
+          version="2.1.0"
+          askiaCompat="5.4.2">
   <info>
-    <name>adc2-autoComplete</name>
+    <name>autoComplete</name>
     <guid>4b7058ef-4656-4aa4-ae9c-269c8a2810f8</guid>
-    <version>1.0.0</version>
+    <version>2.0.0</version>
     <date>2016-03-21</date>
     <description><![CDATA[autoComplete: open text box with search capability as google search]]></description>
     <company>Askia</company>
@@ -17,7 +17,6 @@
     <categories>
       <category>General</category>
     </categories>
-    <style width="400" height="300" />
     <constraints>
       <constraint on="questions" chapter="false" single="false" multiple="false" numeric="false" date="false" open="true" requireParentLoop="true" />
       <constraint on="controls" responseblock="true" label="false" textbox="false" checkbox="false" listbox="false" radiobutton="false" />
