@@ -88,24 +88,13 @@
           <option value="right" text="Right" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="fontSize" name="Font Size" type="string" mode="dynamic" require="true" visible="true">
+      <property xsi:type="standardProperty" id="fontSize" name="Font Size" type="string" mode="dynamic" require="true" visible="false">
         <description><![CDATA[The font size of the control]]></description>
-        <value><![CDATA[16px]]></value>
+        <value><![CDATA[{%= Theme.NormalFS %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="borderRadius" name="Border Radius" type="string" mode="dynamic" require="true" visible="true">
+      <property xsi:type="standardProperty" id="borderRadius" name="Border Radius" type="string" mode="dynamic" require="true" visible="false">
         <description><![CDATA[The amount of curve on the input and suggestions corners]]></description>
-        <value><![CDATA[2px]]></value>
-        <options>
-          <option value="0px" text="0" />
-          <option value="2px" text="2" />
-          <option value="5px" text="5" />
-          <option value="10px" text="10" />
-          <option value="15px" text="15" />
-          <option value="20px" text="20" />
-          <option value="25px" text="25" />
-          <option value="30px" text="30" />
-          <option value="50px" text="50" />
-        </options>
+        <value><![CDATA[{%= Theme.BorderRadius %}]]></value>
       </property>
       <property xsi:type="standardProperty" id="placeholder" name="Placeholder" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[Short hint that describes the expected value]]></description>
@@ -121,31 +110,23 @@
       </property>
     </category>
     <category id="input" name="Input">
-      <property xsi:type="standardProperty" id="backgroundColor" name="Background Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+      <property xsi:type="standardProperty" id="backgroundColor" name="Background Color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
         <description><![CDATA[Background color of the input]]></description>
-        <value><![CDATA[247,247,247]]></value>
+        <value><![CDATA[{%= Theme.NeutralLightColor.ToRGB() %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="color" name="Font Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+      <property xsi:type="standardProperty" id="color" name="Font Color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
         <description><![CDATA[Font color of the input]]></description>
-        <value><![CDATA[68,68,68]]></value>
+        <value><![CDATA[{%= Theme.BlackColor.ToRGB() %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="borderColor" name="Border Color" type="color" require="true" visible="true" colorFormat="rgb">
+      <property xsi:type="standardProperty" id="borderColor" name="Border Color" type="color" require="true" visible="false" colorFormat="rgb">
         <description><![CDATA[The border colour around the input]]></description>
-        <value><![CDATA[204,204,204]]></value>
+        <value><![CDATA[{%= Theme.NeutralDarkColor.ToRGB() %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="borderThickness" name="Border Thickness" type="string" mode="dynamic" require="true" visible="true">
+      <property xsi:type="standardProperty" id="borderThickness" name="Border Thickness" type="string" mode="dynamic" require="true" visible="false">
         <description><![CDATA[The thickness of the border around the input]]></description>
-        <value><![CDATA[1px]]></value>
-        <options>
-          <option value="none" text="None" />
-          <option value="1px" text="1px" />
-          <option value="2px" text="2px" />
-          <option value="3px" text="3px" />
-          <option value="4px" text="4px" />
-          <option value="5px" text="5px" />
-        </options>
+        <value><![CDATA[{%= Theme.BorderWidth %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="borderStyle" name="Border Style" type="string" mode="dynamic" require="true" visible="true">
+      <property xsi:type="standardProperty" id="borderStyle" name="Border Style" type="string" mode="dynamic" require="true" visible="false">
         <description><![CDATA[The style of the border around the input]]></description>
         <value><![CDATA[solid]]></value>
         <options>
@@ -156,31 +137,23 @@
           <option value="double" text="Double" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="backgroundColorHover" name="Hover Background Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+      <property xsi:type="standardProperty" id="backgroundColorHover" name="Hover Background Color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
         <description><![CDATA[Background color of the input when hovered over]]></description>
-        <value><![CDATA[255,255,255]]></value>
+        <value><![CDATA[{%= Theme.WhiteColor.ToRGB() %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="colorHover" name="Hover Font Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+      <property xsi:type="standardProperty" id="colorHover" name="Hover Font Color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
         <description><![CDATA[Font color of the input when hovered over]]></description>
-        <value><![CDATA[68,68,68]]></value>
+        <value><![CDATA[{%= Theme.BlackColor.ToRGB() %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="borderColorHover" name="Hover Border Color" type="color" require="true" visible="true" colorFormat="rgb">
+      <property xsi:type="standardProperty" id="borderColorHover" name="Hover Border Color" type="color" require="true" visible="false" colorFormat="rgb">
         <description><![CDATA[The border colour around the input when hovered over]]></description>
-        <value><![CDATA[187,187,187]]></value>
+        <value><![CDATA[{%= Theme.SecondaryColor.ToRGB() %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="borderThicknessHover" name="Hover Border Thickness" type="string" mode="dynamic" require="true" visible="true">
+      <property xsi:type="standardProperty" id="borderThicknessHover" name="Hover Border Thickness" type="string" mode="dynamic" require="true" visible="false">
         <description><![CDATA[The thickness of the border around the input when hovered over]]></description>
-        <value><![CDATA[1px]]></value>
-        <options>
-          <option value="none" text="None" />
-          <option value="1px" text="1px" />
-          <option value="2px" text="2px" />
-          <option value="3px" text="3px" />
-          <option value="4px" text="4px" />
-          <option value="5px" text="5px" />
-        </options>
+        <value><![CDATA[{%= Theme.BorderWidth %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="borderStyleHover" name="Hover Border Style" type="string" mode="dynamic" require="true" visible="true">
+      <property xsi:type="standardProperty" id="borderStyleHover" name="Hover Border Style" type="string" mode="dynamic" require="true" visible="false">
         <description><![CDATA[The style of the border around the input when hovered over]]></description>
         <value><![CDATA[solid]]></value>
         <options>
@@ -191,31 +164,23 @@
           <option value="double" text="Double" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="backgroundColorFocus" name="Focus Background Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+      <property xsi:type="standardProperty" id="backgroundColorFocus" name="Focus Background Color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
         <description><![CDATA[Background color of the input when focused]]></description>
-        <value><![CDATA[255,255,255]]></value>
+        <value><![CDATA[{%= Theme.WhiteColor.ToRGB() %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="colorFocus" name="Focus Font Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+      <property xsi:type="standardProperty" id="colorFocus" name="Focus Font Color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
         <description><![CDATA[Font color of the input when focused]]></description>
-        <value><![CDATA[68,68,68]]></value>
+        <value><![CDATA[{%= Theme.BlackColor.ToRGB() %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="borderColorFocus" name="Focus Border Color" type="color" require="true" visible="true" colorFormat="rgb">
+      <property xsi:type="standardProperty" id="borderColorFocus" name="Focus Border Color" type="color" require="true" visible="false" colorFormat="rgb">
         <description><![CDATA[The border colour around the input when focused]]></description>
-        <value><![CDATA[0,147,234]]></value>
+        <value><![CDATA[{%= Theme.SecondaryColor.ToRGB() %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="borderThicknessFocus" name="Focus Border Thickness" type="string" mode="dynamic" require="true" visible="true">
+      <property xsi:type="standardProperty" id="borderThicknessFocus" name="Focus Border Thickness" type="string" mode="dynamic" require="true" visible="false">
         <description><![CDATA[The thickness of the border around the input when focused]]></description>
-        <value><![CDATA[1px]]></value>
-        <options>
-          <option value="none" text="None" />
-          <option value="1px" text="1px" />
-          <option value="2px" text="2px" />
-          <option value="3px" text="3px" />
-          <option value="4px" text="4px" />
-          <option value="5px" text="5px" />
-        </options>
+        <value><![CDATA[{%= Theme.BorderWidth %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="borderStyleFocus" name="Focus Border Style" type="string" mode="dynamic" require="true" visible="true">
+      <property xsi:type="standardProperty" id="borderStyleFocus" name="Focus Border Style" type="string" mode="dynamic" require="true" visible="false">
         <description><![CDATA[The style of the border around the input when focused]]></description>
         <value><![CDATA[solid]]></value>
         <options>
@@ -228,35 +193,27 @@
       </property>
     </category>
     <category id="suggestions" name="Suggestions">
-      <property xsi:type="standardProperty" id="backgroundColorSuggestions" name="Suggest Background Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+      <property xsi:type="standardProperty" id="backgroundColorSuggestions" name="Suggest Background Color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
         <description><![CDATA[The background color of the suggestions box]]></description>
-        <value><![CDATA[255,255,255]]></value>
+        <value><![CDATA[{%= Theme.WhiteColor.ToRGB() %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="colorSuggestions" name="Suggest Font Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+      <property xsi:type="standardProperty" id="colorSuggestions" name="Suggest Font Color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
         <description><![CDATA[The font color of the suggestions]]></description>
-        <value><![CDATA[51,51,51]]></value>
+        <value><![CDATA[{%= Theme.BlackColor.ToRGB() %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="colorSearchSuggestions" name="Suggest Search Font Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+      <property xsi:type="standardProperty" id="colorSearchSuggestions" name="Suggest Search Font Color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
         <description><![CDATA[The font color of the search terms of the suggestions]]></description>
-        <value><![CDATA[0,147,234]]></value>
+        <value><![CDATA[{%= Theme.SecondaryColor.ToRGB() %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="borderColorSuggestions" name="Suggest Border Color" type="color" require="true" visible="true" colorFormat="rgb">
+      <property xsi:type="standardProperty" id="borderColorSuggestions" name="Suggest Border Color" type="color" require="true" visible="false" colorFormat="rgb">
         <description><![CDATA[The border colour around the suggestions]]></description>
-        <value><![CDATA[204,204,204]]></value>
+        <value><![CDATA[{%= Theme.NeutralDarkColor.ToRGB() %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="borderThicknessSuggestions" name="Suggest Border Thickness" type="string" mode="dynamic" require="true" visible="true">
+      <property xsi:type="standardProperty" id="borderThicknessSuggestions" name="Suggest Border Thickness" type="string" mode="dynamic" require="true" visible="false">
         <description><![CDATA[The thickness of the border around the suggestions]]></description>
-        <value><![CDATA[1px]]></value>
-        <options>
-          <option value="none" text="None" />
-          <option value="1px" text="1px" />
-          <option value="2px" text="2px" />
-          <option value="3px" text="3px" />
-          <option value="4px" text="4px" />
-          <option value="5px" text="5px" />
-        </options>
+        <value><![CDATA[{%= Theme.BorderWidth %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="borderStyleSuggestions" name="Suggest Border Style" type="string" mode="dynamic" require="true" visible="true">
+      <property xsi:type="standardProperty" id="borderStyleSuggestions" name="Suggest Border Style" type="string" mode="dynamic" require="true" visible="false">
         <description><![CDATA[The style of the border around the suggestions]]></description>
         <value><![CDATA[solid]]></value>
         <options>
@@ -267,17 +224,17 @@
           <option value="double" text="Double" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="backgroundColorSuggestionsHover" name="Hover Suggest Background Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+      <property xsi:type="standardProperty" id="backgroundColorSuggestionsHover" name="Hover Suggest Background Color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
         <description><![CDATA[The background color of the suggestions when hovered over]]></description>
-        <value><![CDATA[0,147,234]]></value>
+        <value><![CDATA[{%= Theme.PrimaryColor.ToRGB() %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="colorSuggestionsHover" name="Hover Suggest Font Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+      <property xsi:type="standardProperty" id="colorSuggestionsHover" name="Hover Suggest Font Color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
         <description><![CDATA[The font color of the suggestions when hovered over]]></description>
-        <value><![CDATA[255,255,255]]></value>
+        <value><![CDATA[{%= Theme.WhiteColor.ToRGB() %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="colorSearchSuggestionsHover" name="Hover Suggest Search Font Color" type="color" mode="dynamic" require="true" visible="true" colorFormat="rgb">
+      <property xsi:type="standardProperty" id="colorSearchSuggestionsHover" name="Hover Suggest Search Font Color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
         <description><![CDATA[The font color of the search terms of the suggestions when hovered over]]></description>
-        <value><![CDATA[221,221,221]]></value>
+        <value><![CDATA[{%= Theme.SecondaryColor.ToRGB() %}]]></value>
       </property>
     </category>
     <category id="fallBackNotSupportedBrowser" name="Not supported browser">
