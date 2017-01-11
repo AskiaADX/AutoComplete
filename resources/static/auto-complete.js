@@ -100,6 +100,9 @@ var autoComplete = (function(){
                     document.getElementById(o.inputIds[i].toString()).value = attrValue.toString();
                     i++;
                 }
+                if (window.askia) {
+                    askia.triggerAnswer();
+                }
             }
         };
         for (var k in options) { if (options.hasOwnProperty(k)) o[k] = options[k]; }
