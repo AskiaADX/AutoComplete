@@ -33,7 +33,7 @@ var autoComplete = (function(){
                 window.event.target = window.event.srcElement;
                 // make sure the event is passed to the fn also so that works the same too
                 // set the this pointer same as addEventListener when fn is called
-                var ret = fn.call(elem, window.event);   
+                var ret = fn.call(elem, window.event);
                 // support an optional return false to be cancel propagation and prevent default handling
                 // like jQuery does
                 if (ret === false) {
@@ -142,7 +142,7 @@ var autoComplete = (function(){
                                 that.sc.scrollTop = selTop + scrTop;
                         }
                 }
-            }
+            };
             addEvent(window, 'resize', that.updateSC);
             document.body.appendChild(that.sc);
 
@@ -171,7 +171,7 @@ var autoComplete = (function(){
             }, that.sc);
 
             that.blurHandler = function(){
-                try { var over_sb = document.querySelector('.autocomplete-suggestions:hover'); } catch(e){ var over_sb = 0; }
+                var over_sb = (document.querySelector('.autocomplete-suggestions:hover')) ? document.querySelector('.autocomplete-suggestions:hover') : 0;
                 if (!over_sb) {
                     that.value = that.last_val;
                     that.sc.style.display = 'none';
@@ -197,13 +197,14 @@ var autoComplete = (function(){
                 }
                 else
                     that.sc.style.display = 'none';
-            }
+            };
 
             that.keydownHandler = function(e){
                 var key = window.event ? e.keyCode : e.which;
+                var sel = that.sc.querySelector('.autocomplete-suggestion.selected');
                 // down (40), up (38)
                 if ((key == 40 || key == 38) && that.sc.innerHTML) {
-                    var next, sel = that.sc.querySelector('.autocomplete-suggestion.selected');
+                    var next;
                     if (!sel) {
                         next = (key == 40) ? that.sc.querySelector('.autocomplete-suggestion') : that.sc.childNodes[that.sc.childNodes.length - 1]; // first : last
                         next.className += ' selected';
@@ -224,7 +225,6 @@ var autoComplete = (function(){
                 else if (key == 27) { that.value = that.last_val; that.sc.style.display = 'none'; }
                 // enter
                 else if (key == 13) {
-                    var sel = that.sc.querySelector('.autocomplete-suggestion.selected');
                     if (sel && that.sc.style.display != 'none') { o.onSelect(e, sel.getAttribute('data-val'), sel); that.last_val = sel.getAttribute('data-val'); that.nchild = 1; setTimeout(function(){ that.sc.style.display = 'none'; }, 20); }
                     return false;
                 }
@@ -250,7 +250,7 @@ var autoComplete = (function(){
                                     if (part in that.cache && !that.cache[part].length) { suggest([],[]); return; }
                                 }
                             }
-                            that.timer = setTimeout(function(){ o.source(val, suggest) }, o.delay);
+                            that.timer = setTimeout(function(){ o.source(val, suggest); }, o.delay);
                         //}
                     } else {
                         if (key != 13) that.last_val = val;
