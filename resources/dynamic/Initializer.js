@@ -6,7 +6,8 @@
         searchField: '{%:= CurrentADC.PropValue("searchField")%}',
         minChars: {%:= CurrentADC.PropValue("minChars")%},
         responseInList: {%:= CurrentADC.PropValue("responseInList")%},
-        inputIds: [{%  Dim i %}{% Dim ar = CurrentQuestion.ParentLoop.AvailableResponses %}{% Dim inputName %}{% For i = 1 To ar.Count %}{% inputName = CurrentQuestion.Iteration(ar[i].Index).InputName() %}"{%= inputName %}"{%:= On(i < ar.Count, ",","") %}{% Next i %}],
+        currentQuestion: '{%:= CurrentQuestion.Shortcut %}',
+        inputIds: [{%  Dim i %}{% Dim ar = CurrentQuestion.ParentLoop.AvailableResponses %}{% Dim inputNames %}{% For i = 1 To ar.Count %}{% inputNames = CurrentQuestion.Iteration(ar[i].Index).InputName() %}"{%= inputNames %}"{%:= On(i < ar.Count, ",","") %}{% Next i %}],
         dataFields: function() {
             var fields = [];
             for(var key in autoComplete.databases[this.databaseName][0]){

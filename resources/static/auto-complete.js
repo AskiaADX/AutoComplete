@@ -85,6 +85,7 @@ var autoComplete = (function(){
             searchField: '',
             databaseName: '',
             responseInList: 1,
+            currentQuestion: '',
             inputIds: [],
             renderItem: function (item, search, fullItem){
                 // escape special characters
@@ -100,7 +101,11 @@ var autoComplete = (function(){
                     document.getElementById(o.inputIds[i].toString()).value = attrValue.toString();
                     i++;
                 }
-                if (window.askia) {
+                console.dir(o.currentQuestion in window.arrLiveRoutingShortcut);
+                if (window.askia 
+                    && window.arrLiveRoutingShortcut 
+                    && window.arrLiveRoutingShortcut.length > 0
+                    && window.arrLiveRoutingShortcut.indexOf(o.currentQuestion) >= 0) {
                     askia.triggerAnswer();
                 }
             }
