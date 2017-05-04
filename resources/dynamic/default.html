@@ -18,8 +18,8 @@
         inputSearchValue = CurrentQuestion.Iteration(ar[i].Index).InputValue()
     EndIf
     %}
-    <input id="{%= inputId %}" class="autocomplete hiddens" type="text" name="{%= inputName%}" value="{%= inputValue %}" />
+    <input id="{%= inputId %}" class="autocomplete hiddens" type="text" name="{%= inputName%}" value="{%:= inputValue %}" />
     {% Next i%}
     <br />
-    <input id="adc_{%= CurrentADC.InstanceId %}_input" class="autocomplete" {%= autofocus %} type="text" name="adc_{%= CurrentADC.InstanceId %}_input" placeholder="{%:= CurrentADC.PropValue("placeholder") %}" value="{%= inputSearchValue %}" />
+    <input id="adc_{%= CurrentADC.InstanceId %}_input" class="autocomplete" {%= autofocus %} type="text" name="adc_{%= CurrentADC.InstanceId %}_input" placeholder="{%:= CurrentADC.PropValue("placeholder") %}" value="{%:= inputSearchValue %}" />
 </div>
