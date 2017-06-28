@@ -8,7 +8,7 @@
     If (CurrentADC.PropValue("autofocus") = "autofocus") Then
         autofocus = "autofocus"
     EndIf
-    Dim ar = CurrentQuestion.ParentLoop.AvailableResponses
+Dim ar = CurrentQuestion.ParentLoop.Answers
     Dim i
     For i = 1 To ar.Count
     inputName = CurrentQuestion.Iteration(ar[i].Index).InputName()
