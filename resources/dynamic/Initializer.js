@@ -22,7 +22,7 @@
             var suggestions = [];
             var completeData = [];
             for (i = 0; n = choices.length, i < n;i++) {
-                if (~choices[i][this.searchField].toLowerCase().indexOf(term)) {
+                if (~choices[i][this.searchField].toString().toLowerCase().indexOf(term)) {
                     suggestions.push(choices[i][this.searchField]);
                     completeData.push(JSON.stringify(choices[i]).replace(/"/g, "#"));
                 }
