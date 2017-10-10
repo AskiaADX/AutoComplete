@@ -101,7 +101,6 @@ var autoComplete = (function(){
                     document.getElementById(o.inputIds[i].toString()).value = attrValue.toString();
                     i++;
                 }
-                console.dir(o.currentQuestion in window.arrLiveRoutingShortcut);
                 if (window.askia 
                     && window.arrLiveRoutingShortcut 
                     && window.arrLiveRoutingShortcut.length > 0
