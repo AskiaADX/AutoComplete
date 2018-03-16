@@ -7,7 +7,7 @@
   <info>
     <name>AutoComplete</name>
     <guid>4b7058ef-4656-4aa4-ae9c-269c8a2810f8</guid>
-    <version>2.0.2</version>
+    <version>2.0.3</version>
     <date>2016-03-21</date>
     <description><![CDATA[autoComplete: open text box with search capability as google search]]></description>
     <company>Askia</company>
@@ -53,6 +53,12 @@
       <property xsi:type="standardProperty" id="searchField" name="Search field" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[It indicates in which field name to search]]></description>
         <value><![CDATA[SEARCHFIELD]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="searchSeparator" name="Separator of words in input search" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[
+          Separator of words in the input search
+        ]]></description>
+        <value><![CDATA[+]]></value>
       </property>
       <property xsi:type="standardProperty" id="minChars" name="Min characters" type="number" mode="dynamic" require="true" visible="true" min="1">
         <description><![CDATA[Indicates the minimum number of characters before to perform the search]]></description>

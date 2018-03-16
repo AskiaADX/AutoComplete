@@ -85,6 +85,7 @@ var autoComplete = (function(){
             searchField: '',
             databaseName: '',
             responseInList: 1,
+            searchSeparator: '+',
             currentQuestion: '',
             inputIds: [],
             renderItem: function (item, search, fullItem){
