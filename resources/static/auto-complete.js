@@ -90,9 +90,11 @@ var autoComplete = (function(){
             inputIds: [],
             renderItem: function (item, search, fullItem){
                 // escape special characters
-                search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-                var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
-                return '<div class="autocomplete-suggestion" data-val="' + item + '" data-fullval="' + fullItem + '">' + item.toString().replace(re, "<b>$1</b>") + '</div>';
+                search = search.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$]/g, '\\$&');
+                var excapedSearchSeparator = o.searchSeparator.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$]/g, "\\$&");
+                var splitRegExp = new RegExp(" |" + excapedSearchSeparator,"gi");
+                var re = new RegExp(search.split(splitRegExp).join('|').replace(/\\\|/gi, "|"), "gi");
+                return '<div class="autocomplete-suggestion" data-val="' + item + '" data-fullval="' + fullItem + '">' + item.toString().replace(re, function (x) {return "<b>" + x + "</b>";}) + '</div>';
             },
             onSelect: function(e, term, item){
                 var obj = JSON.parse(item.getAttribute('data-fullval').replace(/#/g, "\""));
