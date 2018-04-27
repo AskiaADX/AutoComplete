@@ -7,6 +7,8 @@
         selector: '#adc_{%= CurrentADC.InstanceId %}_input',
         databaseName: '{%:= CurrentADC.PropValue("databaseName")%}',
         searchField: '{%:= CurrentADC.PropValue("searchField")%}',
+        filterField: '{%:= CurrentADC.PropValue("filterField")%}',
+        filterValue: '{%= CurrentADC.PropValue("filterValue")%}',
         minChars: {%:= CurrentADC.PropValue("minChars")%},
         responseInList: {%:= CurrentADC.PropValue("responseInList")%},
         searchSeparator: '{%:= CurrentADC.PropValue("searchSeparator")%}',
@@ -31,8 +33,14 @@
             for (i = 0; n = choices.length, i < n;i++) {
                 count = 0;
                 for (j = 0; m = arrTerms.length, j < m;j++) {
-                	if (~choices[i][this.searchField].toString().toLowerCase().indexOf(arrTerms[j])) {
-                        count++;
+                    if (this.filterValue.trim().toLowerCase() !== '') {
+                        if ((~choices[i][this.searchField].toString().toLowerCase().indexOf(arrTerms[j])) && (~choices[i][this.filterField].toString().toLowerCase().indexOf(this.filterValue.toLowerCase()))) {
+                            count++;
+                        }
+                    } else {
+                        if (~choices[i][this.searchField].toString().toLowerCase().indexOf(arrTerms[j])) {
+                            count++;
+                        }   
                     }    
                 }
                 if (count === arrTerms.length) {
