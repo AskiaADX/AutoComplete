@@ -3,16 +3,16 @@
         return typeof element !== "undefined";
     }
     var autocomplete = new autoComplete({
-        menuClass: 'adc_{%= CurrentADC.InstanceId %}',
-        selector: '#adc_{%= CurrentADC.InstanceId %}_input',
-        databaseName: '{%:= CurrentADC.PropValue("databaseName")%}',
-        searchField: '{%:= CurrentADC.PropValue("searchField")%}',
-        filterField: '{%:= CurrentADC.PropValue("filterField")%}',
-        filterValue: '{%= CurrentADC.PropValue("filterValue")%}',
+        menuClass: "adc_{%= CurrentADC.InstanceId %}",
+        selector: "#adc_{%= CurrentADC.InstanceId %}_input",
+        databaseName: "{%:= CurrentADC.PropValue("databaseName")%}",
+        searchField: "{%:= CurrentADC.PropValue("searchField")%}",
+        filterField: "{%:= CurrentADC.PropValue("filterField")%}",
+        filterValue: "{%= CurrentADC.PropValue("filterValue")%}",
         minChars: {%:= CurrentADC.PropValue("minChars")%},
         responseInList: {%:= CurrentADC.PropValue("responseInList")%},
-        searchSeparator: '{%:= CurrentADC.PropValue("searchSeparator")%}',
-        currentQuestion: '{%:= CurrentQuestion.Shortcut %}',
+        searchSeparator: "{%:= CurrentADC.PropValue("searchSeparator")%}",
+        currentQuestion: "{%:= CurrentQuestion.Shortcut %}",
         inputIds: [{%  Dim i %}{% Dim ar = CurrentQuestion.ParentLoop.Answers %}{% Dim inputNames %}{% For i = 1 To ar.Count %}{% inputNames = CurrentQuestion.Iteration(ar[i].Index).InputName() %}"{%= inputNames %}"{%:= On(i < ar.Count, ",","") %}{% Next i %}],
         dataFields: function() {
             var fields = [];
