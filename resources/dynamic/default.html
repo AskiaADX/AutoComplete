@@ -5,6 +5,7 @@
     Dim inputValue
 	Dim inputSearchValue = ""
 	Dim autofocus = ""
+	Dim displayLabelText = (CurrentADC.PropValue("displayLabelText") = "1")
     If (CurrentADC.PropValue("autofocus") = "autofocus") Then
         autofocus = "autofocus"
     EndIf
@@ -18,8 +19,10 @@ Dim ar = CurrentQuestion.ParentLoop.Answers
         inputSearchValue = CurrentQuestion.Iteration(ar[i].Index).InputValue()
     EndIf
     %}
+    <label for="{%= inputId %}" hidden>{%= inputId %}</label>        
     <input id="{%= inputId %}" class="autocomplete hiddens" type="text" name="{%= inputName%}" value="{%:= inputValue %}" />
     {% Next i%}
     <br />
+    <label for="adc_{%= CurrentADC.InstanceId %}_input" {%if not(displayLabelText) then%}hidden{%EndIf%} >{%=CurrentADC.PropValue("searchLabelText")%}</label>
     <input id="adc_{%= CurrentADC.InstanceId %}_input" class="autocomplete" {%= autofocus %} type="text" name="adc_{%= CurrentADC.InstanceId %}_input" placeholder="{%:= CurrentADC.PropValue("placeholder") %}" value="{%:= inputSearchValue %}" />
 </div>

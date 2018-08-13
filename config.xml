@@ -9,7 +9,8 @@
     <guid>4b7058ef-4656-4aa4-ae9c-269c8a2810f8</guid>
     <version>2.0.6</version>
     <date>2016-03-21</date>
-    <description><![CDATA[autoComplete: open text box with search capability as google search]]></description>
+    <description><![CDATA[autoComplete: open text box with search capability as google search
+		v2.0.7 - Add hidden labels for inputs]]></description>
     <company>Askia</company>
     <author><![CDATA[Jérôme Duparc <jeromed@askia.com>]]></author>
     <site>http://www.askia.com</site>
@@ -204,6 +205,14 @@
           <option value="dotted" text="Dotted" />
           <option value="double" text="Double" />
         </options>
+      </property>
+      <property xsi:type="standardProperty" id="searchLabelText" name="Search box text" type="string" require="false" visible="true">
+        <description><![CDATA[]]></description>
+        <value><![CDATA[Search]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="displayLabelText" name="Display search box text" type="boolean" require="false" visible="true">
+        <description><![CDATA[]]></description>
+        <value><![CDATA[false]]></value>
       </property>
     </category>
     <category id="suggestions" name="Suggestions">
