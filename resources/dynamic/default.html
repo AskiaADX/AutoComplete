@@ -21,5 +21,5 @@ Dim ar = CurrentQuestion.ParentLoop.Answers
     <input id="{%= inputId %}" aria-label="{%=inputId%}" class="autocomplete hiddens" type="text" name="{%= inputName%}" value="{%:= inputValue %}" />
     {% Next i%}
     <br />
-    <input id="adc_{%= CurrentADC.InstanceId %}_input" aria-label="placeholder="{%:= CurrentADC.PropValue("placeholder")" class="autocomplete" {%= autofocus %} type="text" name="adc_{%= CurrentADC.InstanceId %}_input" placeholder="{%:= CurrentADC.PropValue("placeholder") %}" value="{%:= inputSearchValue %}" />
+    <input id="adc_{%= CurrentADC.InstanceId %}_input" aria-label="{%:= CurrentADC.PropValue("placeholder")%}" class="autocomplete" {%= autofocus %} type="text" name="adc_{%= CurrentADC.InstanceId %}_input" placeholder="{%:= CurrentADC.PropValue("placeholder") %}" value="{%:= inputSearchValue %}" />
 </div>
