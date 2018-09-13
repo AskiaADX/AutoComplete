@@ -7,10 +7,9 @@
   <info>
     <name>AutoComplete</name>
     <guid>4b7058ef-4656-4aa4-ae9c-269c8a2810f8</guid>
-    <version>2.0.6</version>
+    <version>2.0.7</version>
     <date>2016-03-21</date>
-    <description><![CDATA[autoComplete: open text box with search capability as google search
-		v2.0.7 - Added aria-labels for inputs]]></description>
+    <description><![CDATA[autoComplete: open text box with search capability as google search]]></description>
     <company>Askia</company>
     <author><![CDATA[Jérôme Duparc <jeromed@askia.com>]]></author>
     <site>http://www.askia.com</site>
@@ -123,6 +122,26 @@
           <option value="no" text="No" />
         </options>
       </property>
+      <property xsi:type="standardProperty" id="noMatchFound" name="No match found caption" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Text to display when no match found in the database]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="sortFirst" name="Sort matching beginning first" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Sort the results alphabetically matching the beginning of string then alphabetically for contained text]]></description>
+        <value><![CDATA[no]]></value>
+        <options>
+          <option value="yes" text="Yes" />
+          <option value="no" text="No" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="searchPhonetic" name="Use phonetic search" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Use phonetic search, if yes this groups are treated equally Aaàáâãä ; Eeèéêë ; IiïîyY ; Ooöô ; Uuùúûü ; Ccç]]></description>
+        <value><![CDATA[no]]></value>
+        <options>
+          <option value="yes" text="Yes" />
+          <option value="no" text="No" />
+        </options>
+      </property>
     </category>
     <category id="input" name="Input">
       <property xsi:type="standardProperty" id="backgroundColor" name="Background Color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">
@@ -205,7 +224,7 @@
           <option value="dotted" text="Dotted" />
           <option value="double" text="Double" />
         </options>
-      </property>     
+      </property>
     </category>
     <category id="suggestions" name="Suggestions">
       <property xsi:type="standardProperty" id="backgroundColorSuggestions" name="Suggest Background Color" type="color" mode="dynamic" require="true" visible="false" colorFormat="rgb">

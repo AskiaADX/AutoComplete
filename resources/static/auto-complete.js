@@ -87,6 +87,7 @@ var autoComplete = (function(){
             responseInList: 1,
             searchSeparator: '+',
             currentQuestion: '',
+            noMatchFound: '',
             inputIds: [],
             renderItem: function (item, search, fullItem){
                 // escape special characters
@@ -201,9 +202,11 @@ var autoComplete = (function(){
                     that.sc.innerHTML = s;
                     that.updateSC(0);
                     that.nchild = nItem;
+                    document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","") + ' .nomatch').innerHTML = ''; 
+                } else {
+                	that.sc.style.display = 'none';
+                	document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","") + ' .nomatch').innerHTML = o.noMatchFound;    
                 }
-                else
-                    that.sc.style.display = 'none';
             };
 
             that.keydownHandler = function(e){
@@ -262,6 +265,7 @@ var autoComplete = (function(){
                     } else {
                         if (key != 13) that.last_val = val;
                         that.sc.style.display = 'none';
+                        document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","") + ' .nomatch').innerHTML = ''; 
                     }
                 }
             };

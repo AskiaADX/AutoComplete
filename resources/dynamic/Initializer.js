@@ -2,6 +2,39 @@
     function notUndefined (element) {
         return typeof element !== "undefined";
     }
+    /**
+   * Replace the accent by the non accent version and replace y by i for phonetic search
+   */
+    String.prototype.withoutAccent = function(){
+        // Array accents
+        var pattern_accent = new Array(/À/g, /Á/g, /Â/g, /Ã/g, /Ä/g, /Å/g, /Æ/g, /Ç/g, /È/g, /É/g, /Ê/g, /Ë/g,
+                                       /Ì/g, /Í/g, /Î/g, /Ï/g, /Ð/g, /Ñ/g, /Ò/g, /Ó/g, /Ô/g, /Õ/g, /Ö/g, /Ø/g, /Ù/g, /Ú/g, /Û/g, /Ü/g, /Ý/g,
+                                       /Þ/g, /ß/g, /à/g, /á/g, /â/g, /ã/g, /ä/g, /å/g, /æ/g, /ç/g, /è/g, /é/g, /ê/g, /ë/g, /ì/g, /í/g, /î/g,
+                                       /ï/g, /ð/g, /ñ/g, /ò/g, /ó/g, /ô/g, /õ/g, /ö/g, /ø/g, /ù/g, /ú/g, /û/g, /ü/g, /ý/g, /ý/g, /þ/g, /ÿ/g);
+
+        // Array without accents
+        var pattern_replace_accent = new Array("A","A","A","A","A","A","A","C","E","E","E","E",
+                                               "I","I","I","I","D","N","O","O","O","O","O","O","U","U","U","U","I",
+                                               "b","s","a","a","a","a","a","a","a","c","e","e","e","e","i","i","i",
+                                               "i","d","n","o","o","o","o","o","o","u","u","u","u","i","i","b","i");
+
+        var my_string = this;
+
+        //For each caracters if accent remplace it by his non accent version
+        for(var i=0;i<pattern_accent.length;i++){
+            my_string = my_string.replace(pattern_accent[i],pattern_replace_accent[i]);
+        }
+        return my_string;
+    }
+
+    /**
+   * Shim string.prototype.trim
+   */
+    if (!String.prototype.trim) {
+        String.prototype.trim = function trim() {
+            return this.replace(/^\s+|\s+$/gm, '');
+        };
+    }
     var autocomplete = new autoComplete({
         menuClass: "adc_{%= CurrentADC.InstanceId %}",
         selector: "#adc_{%= CurrentADC.InstanceId %}_input",
@@ -13,6 +46,7 @@
         responseInList: {%:= CurrentADC.PropValue("responseInList")%},
         searchSeparator: "{%:= CurrentADC.PropValue("searchSeparator")%}",
         currentQuestion: "{%:= CurrentQuestion.Shortcut %}",
+        noMatchFound: "{%:= CurrentADC.PropValue("noMatchFound")%}",
         inputIds: [{%  Dim i %}{% Dim ar = CurrentQuestion.ParentLoop.Answers %}{% Dim inputNames %}{% For i = 1 To ar.Count %}{% inputNames = CurrentQuestion.Iteration(ar[i].Index).InputName() %}"{%= inputNames %}"{%:= On(i < ar.Count, ",","") %}{% Next i %}],
         dataFields: function() {
             var fields = [];
@@ -28,27 +62,74 @@
         	var count = 0;
             var choices = autoComplete.databases[this.databaseName];
             var suggestions = [];
+        	var beginFirst = false;
+        	var first = [];
+        	var others = [];
             var completeData = [];
+        	var searchPhonetic = "{%:= CurrentADC.PropValue("searchPhonetic") %}";
+        	var sortFirst = "{%:= CurrentADC.PropValue("sortFirst") %}";
         	var arrTerms = term.toString().split(this.searchSeparator).filter(notUndefined);
             for (i = 0; n = choices.length, i < n;i++) {
                 count = 0;
+                beginFirst = false;
                 for (j = 0; m = arrTerms.length, j < m;j++) {
-                    if (this.filterValue.trim().toLowerCase() !== '') {
-                        if ((~choices[i][this.searchField].toString().toLowerCase().indexOf(arrTerms[j])) && (~choices[i][this.filterField].toString().toLowerCase().indexOf(this.filterValue.toLowerCase()))) {
-                            count++;
+                    if (searchPhonetic === 'yes') {
+                        if (this.filterValue.withoutAccent().trim().toLowerCase() !== '') {
+                            if ((~choices[i][this.searchField].toString().withoutAccent().toLowerCase().indexOf(arrTerms[j].withoutAccent())) && (~choices[i][this.filterField].toString().withoutAccent().toLowerCase().indexOf(this.filterValue.withoutAccent().toLowerCase()))) {
+                                count++;
+                            }
+                        } else {
+                            if (~choices[i][this.searchField].toString().withoutAccent().toLowerCase().indexOf(arrTerms[j].withoutAccent())) {
+                                count++;
+                            }   
+                        }   
+                        if (~choices[i][this.searchField].toString().withoutAccent().toLowerCase().indexOf(arrTerms[j].withoutAccent()) === -1) {
+                        	beginFirst = true;
                         }
                     } else {
-                        if (~choices[i][this.searchField].toString().toLowerCase().indexOf(arrTerms[j])) {
-                            count++;
-                        }   
-                    }    
+                        if (this.filterValue.trim().toLowerCase() !== '') {
+                            if ((~choices[i][this.searchField].toString().toLowerCase().indexOf(arrTerms[j])) && (~choices[i][this.filterField].toString().toLowerCase().indexOf(this.filterValue.toLowerCase()))) {
+                                count++;
+                            }
+                        } else {
+                            if (~choices[i][this.searchField].toString().toLowerCase().indexOf(arrTerms[j])) {
+                                count++;
+                            }   
+                        }
+                        if (~choices[i][this.searchField].toString().toLowerCase().indexOf(arrTerms[j]) === -1) {
+                        	beginFirst = true;
+                        }
+                    }
                 }
                 if (count === arrTerms.length) {
-                    suggestions.push(choices[i][this.searchField]);
+                    if (sortFirst === 'yes') {
+                        if (beginFirst === true) {
+                        	first.push(choices[i][this.searchField]);    
+                        } else {
+                            others.push(choices[i][this.searchField]);
+                        }
+                    } else {
+                    	suggestions.push(choices[i][this.searchField]);
+                    }
                     completeData.push(JSON.stringify(choices[i]).replace(/"/g, "#"));
                 }
             }
-            suggest(suggestions,completeData);
+        	if (sortFirst === 'yes') {
+            	suggest(first.concat(others),completeData);
+            } else {
+            	suggest(suggestions,completeData);   
+            }
         }
+    });
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+        document.querySelector('#adc_{%= CurrentADC.InstanceId %} .close-icon').addEventListener("click", function(event) {
+			var inputs = document.getElementById('adc_{%= CurrentADC.InstanceId %}').getElementsByClassName('autocomplete');
+			for (var i=0; n = inputs.length, i < n; i++) {
+            	inputs[i].value = '';
+            	inputs[i].defaultValue = '';
+        	}
+        	document.querySelector('#adc_{%= CurrentADC.InstanceId %} .nomatch').innerHTML = ''; 
+        });
     });
 } ());
