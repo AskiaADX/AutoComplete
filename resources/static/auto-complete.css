@@ -46,10 +46,10 @@
 .autocomplete-suggestion b {
    font-weight: normal;
 }
-input[type=text]::-ms-clear {  display: none; width : 0; height: 0; }
-input[type=text]::-ms-reveal {  display: none; width : 0; height: 0; }
+.adc-autocomplete input[type=text]::-ms-clear {  display: none; width : 0; height: 0; }
+.adc-autocomplete input[type=text]::-ms-reveal {  display: none; width : 0; height: 0; }
 
-button.close-icon:after {
+.adc-autocomplete button.close-icon:after {
     content: "X";
     display: block;
     background-color: transparent;
@@ -67,10 +67,10 @@ button.close-icon:after {
     cursor: pointer;
 }
 
-button.close-icon {
+.adc-autocomplete button.close-icon {
     border: 1px solid transparent;
     background-color: transparent;
-    display: inline-block;
+    display: none;
     vertical-align: middle;
     outline: 0;
     padding: 1px;
@@ -83,11 +83,14 @@ button.close-icon {
     cursor: pointer;
     float: right;
 }
+.adc-autocomplete .autocomplete:focus + .close-icon {
+    display: inline-block;
+}
 
-input[type=search]::-ms-clear {  display: none; width : 0; height: 0; }
-input[type=search]::-ms-reveal {  display: none; width : 0; height: 0; }
-input[type="search"]::-webkit-search-decoration,
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-results-button,
-input[type="search"]::-webkit-search-results-decoration { display: none;-webkit-appearance: none; }
+.adc-autocomplete input[type=search]::-ms-clear {  display: none; width : 0; height: 0; }
+.adc-autocomplete input[type=search]::-ms-reveal {  display: none; width : 0; height: 0; }
+.adc-autocomplete input[type="search"]::-webkit-search-decoration,
+.adc-autocomplete input[type="search"]::-webkit-search-cancel-button,
+.adc-autocomplete input[type="search"]::-webkit-search-results-button,
+.adc-autocomplete input[type="search"]::-webkit-search-results-decoration { display: none;-webkit-appearance: none; }
 
