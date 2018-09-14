@@ -66,6 +66,8 @@
         	var first = [];
         	var others = [];
             var completeData = [];
+        	var completeFirstData = [];
+        	var completeOthersData = [];
         	var searchPhonetic = "{%:= CurrentADC.PropValue("searchPhonetic") %}";
         	var sortFirst = "{%:= CurrentADC.PropValue("sortFirst") %}";
         	var arrTerms = term.toString().split(this.searchSeparator).filter(notUndefined);
@@ -105,17 +107,19 @@
                     if (sortFirst === 'yes') {
                         if (beginFirst === true) {
                         	first.push(choices[i][this.searchField]);    
+                            completeFirstData.push(JSON.stringify(choices[i]).replace(/"/g, "#"));
                         } else {
                             others.push(choices[i][this.searchField]);
+                            completeOthersData.push(JSON.stringify(choices[i]).replace(/"/g, "#"));
                         }
                     } else {
                     	suggestions.push(choices[i][this.searchField]);
+                        completeData.push(JSON.stringify(choices[i]).replace(/"/g, "#"));
                     }
-                    completeData.push(JSON.stringify(choices[i]).replace(/"/g, "#"));
                 }
             }
         	if (sortFirst === 'yes') {
-            	suggest(first.concat(others),completeData);
+            	suggest(first.concat(others),completeFirstData.concat(completeOthersData));
             } else {
             	suggest(suggestions,completeData);   
             }
