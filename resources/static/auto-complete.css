@@ -46,10 +46,10 @@
 .autocomplete-suggestion b {
    font-weight: normal;
 }
-.adc-autocomplete input[type=text]::-ms-clear {  display: none; width : 0; height: 0; }
-.adc-autocomplete input[type=text]::-ms-reveal {  display: none; width : 0; height: 0; }
+input[type=text]::-ms-clear {  display: none; width : 0; height: 0; }
+input[type=text]::-ms-reveal {  display: none; width : 0; height: 0; }
 
-.adc-autocomplete button.close-icon:after {
+button.close-icon:after {
     content: "X";
     display: block;
     background-color: transparent;
@@ -67,10 +67,10 @@
     cursor: pointer;
 }
 
-.adc-autocomplete button.close-icon {
+button.close-icon {
     border: 1px solid transparent;
     background-color: transparent;
-    display: none;
+    display: inline-block;
     vertical-align: middle;
     outline: 0;
     padding: 1px;
@@ -83,14 +83,11 @@
     cursor: pointer;
     float: right;
 }
-.adc-autocomplete .autocomplete:focus + .close-icon {
-    display: inline-block;
-}
 
-.adc-autocomplete input[type=search]::-ms-clear {  display: none; width : 0; height: 0; }
-.adc-autocomplete input[type=search]::-ms-reveal {  display: none; width : 0; height: 0; }
-.adc-autocomplete input[type="search"]::-webkit-search-decoration,
-.adc-autocomplete input[type="search"]::-webkit-search-cancel-button,
-.adc-autocomplete input[type="search"]::-webkit-search-results-button,
-.adc-autocomplete input[type="search"]::-webkit-search-results-decoration { display: none;-webkit-appearance: none; }
+input[type=search]::-ms-clear {  display: none; width : 0; height: 0; }
+input[type=search]::-ms-reveal {  display: none; width : 0; height: 0; }
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration { display: none;-webkit-appearance: none; }
 
