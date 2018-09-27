@@ -78,7 +78,7 @@
         	var arrTerms = term.toString().split(this.searchSeparator).filter(notUndefined);
         	var arrTempSearch = []
             arrTempSearch.push(this.searchField);
-        	var serchFields = (this.additionalSearchField.toString().split(',') != '') ? arrTempSearch.concat(this.additionalSearchField.toString().split(',')) : arrTempSearch;
+        	var serchFields = (this.additionalSearchField.toString().trim().split(',') != '') ? arrTempSearch.concat(this.additionalSearchField.toString().split(',')) : arrTempSearch;
         	var temp = false;
             for (i = 0; n = choices.length, i < n;i++) {
                 count = 0;
