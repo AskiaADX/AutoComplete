@@ -40,6 +40,7 @@
         selector: "#adc_{%= CurrentADC.InstanceId %}_input",
         databaseName: "{%:= CurrentADC.PropValue("databaseName")%}",
         searchField: "{%:= CurrentADC.PropValue("searchField")%}",
+        additionalSearchField: "{%:= CurrentADC.PropValue("additionalSearchField")%}",
         filterField: "{%:= CurrentADC.PropValue("filterField")%}",
         filterValue: "{%= CurrentADC.PropValue("filterValue")%}",
         minChars: {%:= CurrentADC.PropValue("minChars")%},
@@ -59,6 +60,10 @@
             term = term.toLowerCase();
             var i = 0;
         	var j = 0;
+        	var n = 0;
+        	var m = 0;
+        	var l = 0;
+        	var k = 0;
         	var count = 0;
             var choices = autoComplete.databases[this.databaseName];
             var suggestions = [];
@@ -71,35 +76,48 @@
         	var searchPhonetic = "{%:= CurrentADC.PropValue("searchPhonetic") %}";
         	var sortFirst = "{%:= CurrentADC.PropValue("sortFirst") %}";
         	var arrTerms = term.toString().split(this.searchSeparator).filter(notUndefined);
+        	var arrTempSearch = []
+            arrTempSearch.push(this.searchField);
+        	var serchFields = (this.additionalSearchField.toString().split(',') != '') ? arrTempSearch.concat(this.additionalSearchField.toString().split(',')) : arrTempSearch;
+        	var temp = false;
             for (i = 0; n = choices.length, i < n;i++) {
                 count = 0;
                 beginFirst = false;
                 for (j = 0; m = arrTerms.length, j < m;j++) {
-                    if (searchPhonetic === 'yes') {
-                        if (this.filterValue.withoutAccent().trim().toLowerCase() !== '') {
-                            if ((~choices[i][this.searchField].toString().withoutAccent().toLowerCase().indexOf(arrTerms[j].withoutAccent())) && (~choices[i][this.filterField].toString().withoutAccent().toLowerCase().indexOf(this.filterValue.withoutAccent().toLowerCase()))) {
-                                count++;
-                            }
-                        } else {
-                            if (~choices[i][this.searchField].toString().withoutAccent().toLowerCase().indexOf(arrTerms[j].withoutAccent())) {
-                                count++;
+                    for (l = 0; k = serchFields.length, l < k;l++) {
+                        temp = false;
+                        if (searchPhonetic === 'yes') {
+                            if (this.filterValue.withoutAccent().trim().toLowerCase() !== '') {
+                                if ((~choices[i][serchFields[l]].toString().withoutAccent().toLowerCase().indexOf(arrTerms[j].withoutAccent())) && (~choices[i][this.filterField].toString().withoutAccent().toLowerCase().indexOf(this.filterValue.withoutAccent().toLowerCase()))) {
+                                    count++;
+                                    temp = true;
+                                }
+                            } else {
+                                if (~choices[i][serchFields[l]].toString().withoutAccent().toLowerCase().indexOf(arrTerms[j].withoutAccent())) {
+                                    count++;
+                                    temp = true;
+                                }   
                             }   
-                        }   
-                        if (~choices[i][this.searchField].toString().withoutAccent().toLowerCase().indexOf(arrTerms[j].withoutAccent()) === -1) {
-                        	beginFirst = true;
-                        }
-                    } else {
-                        if (this.filterValue.trim().toLowerCase() !== '') {
-                            if ((~choices[i][this.searchField].toString().toLowerCase().indexOf(arrTerms[j])) && (~choices[i][this.filterField].toString().toLowerCase().indexOf(this.filterValue.toLowerCase()))) {
-                                count++;
+                            if (~choices[i][serchFields[l]].toString().withoutAccent().toLowerCase().indexOf(arrTerms[j].withoutAccent()) === -1) {
+                                beginFirst = true;
                             }
+                            if (temp === true) break;
                         } else {
-                            if (~choices[i][this.searchField].toString().toLowerCase().indexOf(arrTerms[j])) {
-                                count++;
-                            }   
-                        }
-                        if (~choices[i][this.searchField].toString().toLowerCase().indexOf(arrTerms[j]) === -1) {
-                        	beginFirst = true;
+                            if (this.filterValue.trim().toLowerCase() !== '') {
+                                if ((~choices[i][serchFields[l]].toString().toLowerCase().indexOf(arrTerms[j])) && (~choices[i][this.filterField].toString().toLowerCase().indexOf(this.filterValue.toLowerCase()))) {
+                                    count++;
+                                    temp = true;
+                                }
+                            } else {
+                                if (~choices[i][serchFields[l]].toString().toLowerCase().indexOf(arrTerms[j])) {
+                                    count++;
+                                    temp = true;
+                                }   
+                            }
+                            if (~choices[i][serchFields[l]].toString().toLowerCase().indexOf(arrTerms[j]) === -1) {
+                                beginFirst = true;
+                            }
+                            if (temp === true) break;
                         }
                     }
                 }
