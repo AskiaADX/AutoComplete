@@ -42,7 +42,7 @@
         searchField: "{%:= CurrentADC.PropValue("searchField")%}",
         additionalSearchField: "{%:= CurrentADC.PropValue("additionalSearchField")%}",
         filterField: "{%:= CurrentADC.PropValue("filterField")%}",
-        filterValue: "{%= CurrentADC.PropValue("filterValue")%}",
+        filterValue: "{%:= CurrentADC.PropValue("filterValue")%}",
         minChars: {%:= CurrentADC.PropValue("minChars")%},
         responseInList: {%:= CurrentADC.PropValue("responseInList")%},
         searchSeparator: "{%:= CurrentADC.PropValue("searchSeparator")%}",
