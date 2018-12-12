@@ -7,3 +7,4 @@
 * v2.0.8 - 2018/09/14 - Jérôme Duparc - Fixed completeData when sorting first
 * v2.0.9 - 2018/09/27 - Jérôme Duparc - Added additional search field
 * v2.0.10 - 2018/10/23 - Jérôme Duparc - Fixed filter value encoding
+* v3.0.0 - 2018/12/12 - Jérôme Duparc - AvailableAnswers
