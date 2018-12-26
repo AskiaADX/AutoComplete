@@ -18,13 +18,13 @@
       <category>General</category>
     </categories>
     <constraints>
-      <constraint on="questions" chapter="false" single="false" multiple="false" numeric="false" date="false" open="true" requireParentLoop="true" RequireLoopDepth="true" />
+      <constraint on="questions" chapter="false" single="false" multiple="false" numeric="false" date="false" open="true" requireParentLoop="true" RequireLoopDepth="1" />
       <constraint on="controls" responseblock="true" label="false" textbox="false" checkbox="false" listbox="false" radiobutton="false" />
       <constraint on="responses" max="*" min="*" />
     </constraints>
   </info>
   <outputs defaultOutput="default">
-    <output id="default">
+    <output id="default" ManageLoopDepth="1">
       <description><![CDATA[Javascript is enable]]></description>
       <condition><![CDATA[browser.support("Javascript")]]></condition>
       <content fileName="auto-complete.css" type="css" mode="static" position="head" />
@@ -34,7 +34,7 @@
       <content fileName="IncludeDatabase.html" type="html" mode="dynamic" position="foot" />
       <content fileName="Initializer.js" type="javascript" mode="dynamic" position="foot" />
     </output>
-    <output id="fallback">
+    <output id="fallback" ManageLoopDepth="1">
       <description><![CDATA[Javascript is not enable]]></description>
       <condition><![CDATA[not(Browser.Support("javascript"))]]></condition>
       <content fileName="NotSupportedBrowser.html" type="html" mode="dynamic" position="placeholder" />
