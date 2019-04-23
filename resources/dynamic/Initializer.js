@@ -146,6 +146,8 @@
 
     document.addEventListener("DOMContentLoaded", function(event) {
         document.querySelector('#adc_{%= CurrentADC.InstanceId %} .close-icon').addEventListener("click", function(event) {
+            event.preventDefault();
+        	event.stopPropagation();
 			var inputs = document.getElementById('adc_{%= CurrentADC.InstanceId %}').getElementsByClassName('autocomplete');
 			for (var i=0; n = inputs.length, i < n; i++) {
             	inputs[i].value = '';

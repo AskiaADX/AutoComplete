@@ -18,8 +18,8 @@ Dim ar = CurrentQuestion.ParentLoop.Answers
         inputSearchValue = CurrentQuestion.Iteration(ar[i].Index).InputValue()
     EndIf
     %}     
-    <input id="{%= inputId %}" aria-label="{%=inputId%}" class="autocomplete hiddens" type="text" autocomplete="nope" name="{%= inputName%}" value="{%:= inputValue %}" />
+    <input id="{%= inputId %}" aria-label="{%=inputId%}" class="autocomplete hiddens" type="text" autocomplete="off" name="{%= inputName%}" value="{%:= inputValue %}" />
     {% Next i%}
     <br />
-    <input id="adc_{%= CurrentADC.InstanceId %}_input" aria-label="{%:= CurrentADC.PropValue("placeholder")%}" class="autocomplete" {%= autofocus %} type="search" autocomplete="nope" name="adc_{%= CurrentADC.InstanceId %}_input" placeholder="{%:= CurrentADC.PropValue("placeholder") %}" value="{%:= inputSearchValue %}" /><button class="close-icon" type="reset"></button><div class="nomatch"></div>
+    <input id="adc_{%= CurrentADC.InstanceId %}_input" aria-label="{%:= CurrentADC.PropValue("placeholder")%}" class="autocomplete" {%= autofocus %} type="search" autocomplete="off" name="adc_{%= CurrentADC.InstanceId %}_input" placeholder="{%:= CurrentADC.PropValue("placeholder") %}" value="{%:= inputSearchValue %}" /><button class="close-icon" type="reset"></button><div class="nomatch"></div>
 </div>
