@@ -7,7 +7,7 @@
   <info>
     <name>AutoComplete</name>
     <guid>4b7058ef-4656-4aa4-ae9c-269c8a2810f8</guid>
-    <version>3.0.1</version>
+    <version>3.0.2</version>
     <date>2016-03-21</date>
     <description><![CDATA[autoComplete: open text box with search capability as google search]]></description>
     <company>Askia</company>
@@ -18,13 +18,13 @@
       <category>General</category>
     </categories>
     <constraints>
-      <constraint on="questions" chapter="false" single="false" multiple="false" numeric="false" date="false" open="true" requireParentLoop="true" requireLoopDepth="1" />
-      <constraint on="controls" responseblock="true" label="false" textbox="false" checkbox="false" listbox="false" radiobutton="false" />
+      <constraint on="questions" chapter="false" single="false" multiple="false" numeric="false" date="false" open="true" requireParentLoop="true" requireLoopDepth="true" />
+      <constraint on="controls" responseblock="true" label="false" textbox="true" checkbox="false" listbox="false" radiobutton="false" />
       <constraint on="responses" max="*" min="*" />
     </constraints>
   </info>
   <outputs defaultOutput="default">
-    <output id="default" manageLoopDepth="1">
+    <output id="default">
       <description><![CDATA[Javascript is enable]]></description>
       <condition><![CDATA[browser.support("Javascript")]]></condition>
       <content fileName="auto-complete.css" type="css" mode="static" position="head" />
@@ -34,7 +34,7 @@
       <content fileName="IncludeDatabase.html" type="html" mode="dynamic" position="foot" />
       <content fileName="Initializer.js" type="javascript" mode="dynamic" position="foot" />
     </output>
-    <output id="fallback" manageLoopDepth="1">
+    <output id="fallback">
       <description><![CDATA[Javascript is not enable]]></description>
       <condition><![CDATA[not(Browser.Support("javascript"))]]></condition>
       <content fileName="NotSupportedBrowser.html" type="html" mode="dynamic" position="placeholder" />
