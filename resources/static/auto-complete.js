@@ -105,8 +105,8 @@ var autoComplete = (function(){
                     document.getElementById(o.inputIds[i].toString()).value = attrValue.toString();
                     i++;
                 }
-                if (window.askia 
-                    && window.arrLiveRoutingShortcut 
+                if (window.askia
+                    && window.arrLiveRoutingShortcut
                     && window.arrLiveRoutingShortcut.length > 0
                     && window.arrLiveRoutingShortcut.indexOf(o.currentQuestion) >= 0) {
                     askia.triggerAnswer();
@@ -164,7 +164,11 @@ var autoComplete = (function(){
                 var sel = that.sc.querySelector('.autocomplete-suggestion.selected');
                 if (sel) sel.className = sel.className.replace('selected', '');
                 this.className += ' selected';
-                that.value = this.getAttribute('data-val');
+
+                var selectOnHover = window.value;
+                if(selectOnHover == "yes"){
+                  that.value = this.getAttribute('data-val');
+                }
             }, that.sc);
 
             live('autocomplete-suggestion', 'mousedown', function(e){
@@ -202,10 +206,10 @@ var autoComplete = (function(){
                     that.sc.innerHTML = s;
                     that.updateSC(0);
                     that.nchild = nItem;
-                    document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","") + ' .nomatch').innerHTML = ''; 
+                    document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","") + ' .nomatch').innerHTML = '';
                 } else {
                 	that.sc.style.display = 'none';
-                	document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","") + ' .nomatch').innerHTML = o.noMatchFound;    
+                	document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","") + ' .nomatch').innerHTML = o.noMatchFound;
                 }
             };
 
@@ -265,7 +269,7 @@ var autoComplete = (function(){
                     } else {
                         if (key != 13) that.last_val = val;
                         that.sc.style.display = 'none';
-                        document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","") + ' .nomatch').innerHTML = ''; 
+                        document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","") + ' .nomatch').innerHTML = '';
                     }
                 }
             };
