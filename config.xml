@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<control  xmlns="http://www.askia.com/2.1.0/ADCSchema"
+<control  xmlns="http://www.askia.com/2.2.0/ADCSchema"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://www.askia.com/2.1.0/ADCSchema https://raw.githubusercontent.com/AskiaADX/ADXSchema/2.1.0/ADCSchema.xsd"
-          version="2.1.0"
-          askiaCompat="5.4.2">
+          xsi:schemaLocation="http://www.askia.com/2.2.0/ADCSchema https://raw.githubusercontent.com/AskiaADX/ADXSchema/2.2.0/ADCSchema.xsd"
+          version="2.2.0"
+          askiaCompat="5.5.2">
   <info>
     <name>AutoComplete</name>
     <guid>4b7058ef-4656-4aa4-ae9c-269c8a2810f8</guid>
-    <version>3.0.4</version>
+    <version>3.0.5</version>
     <date>2016-03-21</date>
     <description><![CDATA[autoComplete: open text box with search capability as google search]]></description>
     <company>Askia</company>
@@ -34,7 +34,7 @@
       <content fileName="IncludeDatabase.html" type="html" mode="dynamic" position="foot" />
       <content fileName="Initializer.js" type="javascript" mode="dynamic" position="foot" />
     </output>
-    <output id="fallback">
+    <output id="fallback" manageLoopDepth="0">
       <description><![CDATA[Javascript is not enable]]></description>
       <condition><![CDATA[not(Browser.Support("javascript"))]]></condition>
       <content fileName="NotSupportedBrowser.html" type="html" mode="dynamic" position="placeholder" />
@@ -140,6 +140,14 @@
       </property>
       <property xsi:type="standardProperty" id="searchPhonetic" name="Use phonetic search" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[Use phonetic search, if yes this groups are treated equally Aaàáâãä ; Eeèéêë ; IiïîyY ; Ooöô ; Uuùúûü ; Ccç]]></description>
+        <value><![CDATA[no]]></value>
+        <options>
+          <option value="yes" text="Yes" />
+          <option value="no" text="No" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="selectOnHover" name="Select on hover" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Select suggestions on mouse hover]]></description>
         <value><![CDATA[no]]></value>
         <options>
           <option value="yes" text="Yes" />

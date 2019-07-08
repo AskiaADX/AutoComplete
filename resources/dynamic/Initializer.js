@@ -1,4 +1,5 @@
 (function () {
+
     function notUndefined (element) {
         return typeof element !== "undefined";
     }
@@ -96,8 +97,8 @@
                                 if (~choices[i][serchFields[l]].toString().withoutAccent().toLowerCase().indexOf(arrTerms[j].withoutAccent())) {
                                     count++;
                                     temp = true;
-                                }   
-                            }   
+                                }
+                            }
                             if (~choices[i][serchFields[l]].toString().withoutAccent().toLowerCase().indexOf(arrTerms[j].withoutAccent()) === -1) {
                                 beginFirst = true;
                             }
@@ -112,7 +113,7 @@
                                 if (~choices[i][serchFields[l]].toString().toLowerCase().indexOf(arrTerms[j])) {
                                     count++;
                                     temp = true;
-                                }   
+                                }
                             }
                             if (~choices[i][serchFields[l]].toString().toLowerCase().indexOf(arrTerms[j]) === -1) {
                                 beginFirst = true;
@@ -124,7 +125,7 @@
                 if (count === arrTerms.length) {
                     if (sortFirst === 'yes') {
                         if (beginFirst === true) {
-                        	first.push(choices[i][this.searchField]);    
+                        	first.push(choices[i][this.searchField]);
                             completeFirstData.push(JSON.stringify(choices[i]).replace(/"/g, "#"));
                         } else {
                             others.push(choices[i][this.searchField]);
@@ -139,7 +140,7 @@
         	if (sortFirst === 'yes') {
             	suggest(first.concat(others),completeFirstData.concat(completeOthersData));
             } else {
-            	suggest(suggestions,completeData);   
+            	suggest(suggestions,completeData);
             }
         }
     });
@@ -153,7 +154,7 @@
             	inputs[i].value = '';
             	inputs[i].defaultValue = '';
         	}
-        	document.querySelector('#adc_{%= CurrentADC.InstanceId %} .nomatch').innerHTML = ''; 
+        	document.querySelector('#adc_{%= CurrentADC.InstanceId %} .nomatch').innerHTML = '';
         });
     });
 } ());
