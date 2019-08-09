@@ -19,6 +19,7 @@ Dim borderStyleFocus = CurrentADC.PropValue("borderStyleFocus")
 Dim borderColorSuggestions = CurrentADC.PropValue("borderColorSuggestions")
 Dim borderThicknessSuggestions = CurrentADC.PropValue("borderThicknessSuggestions")
 Dim borderStyleSuggestions = CurrentADC.PropValue("borderStyleSuggestions")
+Dim noMatchOffset = CurrentADC.PropValue("noMatchOffset")
 %}
 
 /*
@@ -29,6 +30,9 @@ Dim borderStyleSuggestions = CurrentADC.PropValue("borderStyleSuggestions")
 }
 #adc_{%= CurrentADC.InstanceId %} {
     margin: {%= controlAlign %};
+}
+#adc_{%= CurrentADC.InstanceId %}.marginbottom {
+    margin-bottom: {%= noMatchOffset %} !important;
 }
 #adc_{%= CurrentADC.InstanceId %} .autocomplete, .adc_{%= CurrentADC.InstanceId %} .autocomplete-suggestion {
     font-size: {%:= CurrentADC.PropValue("fontSize") %};

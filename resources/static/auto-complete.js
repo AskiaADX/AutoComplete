@@ -13,6 +13,34 @@ var autoComplete = (function(){
         // helpers
         function hasClass(el, className){ return el.classList ? el.classList.contains(className) : new RegExp('\\b'+ className+'\\b').test(el.className); }
 
+        /**
+           * Add class in DOMElement
+           *
+           * @param {HTMLElement} obj HTMLElement where the class should be added
+           * @param {String} clsName Name of the class to add
+           */
+        function addClass (obj, clsName) {
+            if (obj.classList) {
+                obj.classList.add(clsName);
+            } else {
+                obj.className += ' ' + clsName;
+            }
+        }
+
+        /**
+        * Remove class in DOMElement
+        *
+        * @param {HTMLElement} obj HTMLElement where the class should be removed
+        * @param {String} clsName Name of the class to remove
+        */
+        function removeClass (obj, clsName) {
+            if (obj.classList) {
+                obj.classList.remove(clsName);
+            } else {
+                obj.className = obj.className.replace(new RegExp('(^|\\b)' + clsName.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+            }
+        }
+
         function addEvent(elem, event, fn) {
             // allow the passing of an element id string instead of the DOM elem
             if (typeof elem === "string") {
@@ -88,6 +116,7 @@ var autoComplete = (function(){
             searchSeparator: '+',
             currentQuestion: '',
             noMatchFound: '',
+            noMatchOffset: '',
             inputIds: [],
             renderItem: function (item, search, fullItem){
                 // escape special characters
@@ -183,11 +212,12 @@ var autoComplete = (function(){
                 }
             }, that.sc);
 
-            that.blurHandler = function(){
+            that.blurHandler = function(e){
                 var over_sb = (document.querySelector('.autocomplete-suggestions:hover')) ? document.querySelector('.autocomplete-suggestions:hover') : 0;
                 if (!over_sb) {
                     that.value = that.last_val;
                     that.sc.style.display = 'none';
+                    if (e.relatedTarget !== null && hasClass(e.relatedTarget, "close-icon")) removeClass(document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","")),"marginbottom");
                     setTimeout(function(){ that.sc.style.display = 'none'; }, 350); // hide suggestions on fast input
                 } else if (that !== document.activeElement) setTimeout(function(){ that.focus(); }, 20);
             };
@@ -208,9 +238,11 @@ var autoComplete = (function(){
                     that.updateSC(0);
                     that.nchild = nItem;
                     document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","") + ' .nomatch').innerHTML = '';
+                    removeClass(document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","")),"marginbottom");
                 } else {
                 	that.sc.style.display = 'none';
-                	document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","") + ' .nomatch').innerHTML = o.noMatchFound;
+                    document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","") + ' .nomatch').innerHTML = o.noMatchFound;
+                    addClass(document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","")),"marginbottom");
                 }
             };
 
@@ -271,6 +303,7 @@ var autoComplete = (function(){
                         if (key != 13) that.last_val = val;
                         that.sc.style.display = 'none';
                         document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","") + ' .nomatch').innerHTML = '';
+                        removeClass(document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","")),"marginbottom");
                     }
                 }
             };

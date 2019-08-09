@@ -49,6 +49,7 @@
         searchSeparator: "{%:= CurrentADC.PropValue("searchSeparator")%}",
         currentQuestion: "{%:= CurrentQuestion.Shortcut %}",
         noMatchFound: "{%:= CurrentADC.PropValue("noMatchFound")%}",
+        noMatchOffset: "{%:= CurrentADC.PropValue("noMatchOffset")%}",
         inputIds: [{%  Dim i %}{% Dim ar = CurrentQuestion.ParentLoop.Responses %}{% Dim inputNames %}{% For i = 1 To ar.Count %}{% inputNames = CurrentQuestion.Iteration(ar[i].Index).InputName() %}"{%= inputNames %}"{%:= On(i < ar.Count, ",","") %}{% Next i %}],
         dataFields: function() {
             var fields = [];

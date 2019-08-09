@@ -9,3 +9,4 @@
 * v2.0.10 - 2018/10/23 - Jérôme Duparc - Fixed filter value encoding
 * v3.0.0 - 2018/12/12 - Jérôme Duparc - AvailableAnswers
 * v3.0.1 - 2019/12/12 - Jérôme Duparc - Fixed rest button
+* v3.0.7 - 2019/08/09 - Jérôme Duparc - Added no match found offset
