@@ -27,5 +27,11 @@ Dim selectOnHover =  CurrentADC.PropValue("selectOnHover")
     <input id="{%= inputId %}" aria-label="{%=inputId%}" class="autocomplete hiddens" type="text" autocomplete="off" name="{%= inputName%}" value="{%:= inputValue %}" />
     {% Next i%}
     <br />
-    <input id="adc_{%= CurrentADC.InstanceId %}_input" aria-label="{%:= CurrentADC.PropValue("placeholder")%}" class="autocomplete" {%= autofocus %} type="search" autocomplete="off" name="adc_{%= CurrentADC.InstanceId %}_input" placeholder="{%:= CurrentADC.PropValue("placeholder") %}" value="{%:= inputSearchValue %}" /><button class="close-icon" type="reset"></button><div class="nomatch"></div>
+    {%
+    Dim highlightInput = CurrentADC.PropValue("highlightInputOnError")
+    Dim highlightConditionBlockingMessage = CurrentADC.PropValue("highlightConditionBlockingErrorMessage").ToLowerCase().Trim()
+    Dim highlightConditionNonBlockingMessage = CurrentADC.PropValue("highlightConditionNonBlockingErrorMessage").ToLowerCase().Trim()
+	Dim classHighlight = On(highlightInput = "yes" And highlightConditionBlockingMessage = "true"," blocking_errormessage",On(highlightInput = "yes" And highlightConditionNonBlockingMessage = "true"," nonblocking_errormessage",""))
+    %}
+    <input id="adc_{%= CurrentADC.InstanceId %}_input" aria-label="{%:= CurrentADC.PropValue("placeholder")%}" class="autocomplete{%= classHighlight %}" {%= autofocus %} type="search" autocomplete="off" name="adc_{%= CurrentADC.InstanceId %}_input" placeholder="{%:= CurrentADC.PropValue("placeholder") %}" value="{%:= inputSearchValue %}" /><button class="close-icon" type="reset"></button><div class="nomatch"></div>
 </div>

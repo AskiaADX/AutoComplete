@@ -20,6 +20,13 @@ Dim borderColorSuggestions = CurrentADC.PropValue("borderColorSuggestions")
 Dim borderThicknessSuggestions = CurrentADC.PropValue("borderThicknessSuggestions")
 Dim borderStyleSuggestions = CurrentADC.PropValue("borderStyleSuggestions")
 Dim noMatchOffset = CurrentADC.PropValue("noMatchOffset")
+Dim highlightInputOnError = CurrentADC.PropValue("highlightInputOnError")
+Dim highlightConditionBlockingMessage = CurrentADC.PropValue("highlightConditionBlockingErrorMessage").ToLowerCase().Trim()
+Dim highlightConditionNonBlockingMessage = CurrentADC.PropValue("highlightConditionNonBlockingErrorMessage").ToLowerCase().Trim()
+Dim highlightColorBlockingErrorMessage = CurrentADC.PropValue("highlightFontColorBlockingErrorMessage")
+Dim highlightBorderBlockingErrorMessage = CurrentADC.PropValue("highlightBorderColorBlockingErrorMessage")
+Dim highlightColorNonBlockingErrorMessage = CurrentADC.PropValue("highlightFontColorNonBlockingErrorMessage")
+Dim highlightBorderNonBlockingErrorMessage = CurrentADC.PropValue("highlightBorderColorNonBlockingErrorMessage")
 %}
 
 /*
@@ -72,6 +79,30 @@ Dim noMatchOffset = CurrentADC.PropValue("noMatchOffset")
     border: {%= borderThicknessFocus %} {%= borderStyleFocus %} {%= borderColorFocus.ToHexa() %};
     {% EndIf %}
 }
+
+{% If (highlightInputOnError = "yes") Then %}
+#adc_{%= CurrentADC.InstanceId %} .blocking_errormessage {
+    {% If (highlightConditionBlockingMessage = "true") Then  %}
+        {% If (highlightColorBlockingErrorMessage <> "") Then %}
+    	color: rgba({%= highlightColorBlockingErrorMessage.ToRGBA() %});
+        {% EndIf %}
+        {% If (highlightBorderBlockingErrorMessage <> "") Then %}
+        border-color: rgba({%= highlightBorderBlockingErrorMessage.ToRGBA() %});
+        {% EndIf %}
+    {% EndIf %}
+}
+#adc_{%= CurrentADC.InstanceId %} .nonblocking_errormessage {
+    {% If (highlightConditionNonBlockingMessage = "true") Then  %}
+        {% If (highlightColorNonBlockingErrorMessage <> "") Then %}
+        color: rgba({%= highlightColorNonBlockingErrorMessage.ToRGBA() %});
+        {% EndIf %}
+        {% If (highlightBorderNonBlockingErrorMessage <> "") Then %}
+        border-color: rgba({%= highlightBorderNonBlockingErrorMessage.ToRGBA() %});
+        {% EndIf %}
+    {% EndIf %}
+}
+{% EndIf %}
+
 /**
 * Suggestions
 */

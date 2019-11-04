@@ -7,7 +7,7 @@
   <info>
     <name>AutoComplete</name>
     <guid>4b7058ef-4656-4aa4-ae9c-269c8a2810f8</guid>
-    <version>3.0.7</version>
+    <version>3.0.8</version>
     <date>2016-03-21</date>
     <description><![CDATA[autoComplete: open text box with search capability as google search]]></description>
     <company>Askia</company>
@@ -24,7 +24,7 @@
     </constraints>
   </info>
   <outputs defaultOutput="default">
-    <output id="default" manageLoopDepth="0">
+    <output id="default" manageLoopDepth="1">
       <description><![CDATA[Javascript is enable]]></description>
       <condition><![CDATA[browser.support("Javascript")]]></condition>
       <content fileName="auto-complete.css" type="css" mode="static" position="head" />
@@ -34,7 +34,7 @@
       <content fileName="IncludeDatabase.html" type="html" mode="dynamic" position="foot" />
       <content fileName="Initializer.js" type="javascript" mode="dynamic" position="foot" />
     </output>
-    <output id="fallback" manageLoopDepth="0">
+    <output id="fallback" manageLoopDepth="1">
       <description><![CDATA[Javascript is not enable]]></description>
       <condition><![CDATA[not(Browser.Support("javascript"))]]></condition>
       <content fileName="NotSupportedBrowser.html" type="html" mode="dynamic" position="placeholder" />
@@ -291,6 +291,41 @@
       <property xsi:type="standardProperty" id="notSupportedBrowser" name="Not supported browser" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[Message to display to the non-supported browser]]></description>
         <value><![CDATA[Sorry this page uses Javascript code, please enable it.]]></value>
+      </property>
+    </category>
+    <category id="ErrorMessages" name="Error Messages">
+      <condition><![CDATA[Highlight input when an error message is shown]]></condition>
+      <property xsi:type="standardProperty" id="highlightInputOnError" name="Highlight input" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Highlight the input on error message appearing]]></description>
+        <value><![CDATA[no]]></value>
+        <options>
+          <option value="yes" text="Yes" />
+          <option value="no" text="No" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="highlightConditionBlockingErrorMessage" name="Highlight Condition on blocking error message" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Condition when to highlight the border of the input for blocking error messages]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="highlightFontColorBlockingErrorMessage" name="Highlight font color on blocking error message" type="color" mode="dynamic" require="false" visible="true" colorFormat="rgb">
+        <description><![CDATA[Color of the font to highlight when blocking error message appears]]></description>
+        <value><![CDATA[{%= Theme.ErrorColor.ToRGB() %}]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="highlightBorderColorBlockingErrorMessage" name="Highlight border color on blocking error message" type="color" mode="dynamic" require="false" visible="true" colorFormat="rgb">
+        <description><![CDATA[Color of the border to highlight when blocking error message appears]]></description>
+        <value><![CDATA[{%= Theme.ErrorColor.ToRGB() %}]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="highlightConditionNonBlockingErrorMessage" name="Highlight Condition on non blocking error message" type="string" mode="dynamic" require="false" visible="true">
+        <description><![CDATA[Condition when to highlight the border of the input for non blocking error messages]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="highlightFontColorNonBlockingErrorMessage" name="Highlight font color on non blocking error message" type="color" mode="dynamic" require="false" visible="true" colorFormat="rgb">
+        <description><![CDATA[Color of the font to highlight when non blocking error message appears]]></description>
+        <value><![CDATA[228,214,0]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="highlightBorderColorNonBlockingErrorMessage" name="Highlight border color on non blocking error message" type="color" mode="dynamic" require="false" visible="true" colorFormat="rgb">
+        <description><![CDATA[Color of the border to highlight when non blocking error message appears]]></description>
+        <value><![CDATA[228,214,0]]></value>
       </property>
     </category>
   </properties>
