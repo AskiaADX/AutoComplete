@@ -294,7 +294,6 @@
       </property>
     </category>
     <category id="ErrorMessages" name="Error Messages">
-      <condition><![CDATA[Highlight input when an error message is shown]]></condition>
       <property xsi:type="standardProperty" id="highlightInputOnError" name="Highlight input" type="string" mode="dynamic" require="false" visible="true">
         <description><![CDATA[Highlight the input on error message appearing]]></description>
         <value><![CDATA[no]]></value>
