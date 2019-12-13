@@ -132,6 +132,9 @@ var autoComplete = (function(){
                 for(var key in obj){
                     var attrValue = obj[key];
                     document.getElementById(o.inputIds[i].toString()).value = attrValue.toString();
+                    var event = document.createEvent('HTMLEvents');
+                    event.initEvent('autocomplete', true, false);
+                    document.getElementById(o.inputIds[i].toString()).dispatchEvent(event);
                     i++;
                 }
                 if (window.askia
