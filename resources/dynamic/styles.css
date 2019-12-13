@@ -28,7 +28,12 @@ Dim highlightBorderBlockingErrorMessage = CurrentADC.PropValue("highlightBorderC
 Dim highlightColorNonBlockingErrorMessage = CurrentADC.PropValue("highlightFontColorNonBlockingErrorMessage")
 Dim highlightBorderNonBlockingErrorMessage = CurrentADC.PropValue("highlightBorderColorNonBlockingErrorMessage")
 %}
-
+#adc_{%= CurrentADC.InstanceId %} button.close-icon {
+    background-color: {%= CurrentADC.PropValue("backgroundColor").ToHexa() %};
+}
+.adc-autocomplete button.close-icon:after {
+    color: {%= CurrentADC.PropValue("color").ToHexa() %};
+}
 /*
 * Control
 */
