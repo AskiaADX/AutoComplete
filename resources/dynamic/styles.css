@@ -20,7 +20,12 @@ Dim borderColorSuggestions = CurrentADC.PropValue("borderColorSuggestions")
 Dim borderThicknessSuggestions = CurrentADC.PropValue("borderThicknessSuggestions")
 Dim borderStyleSuggestions = CurrentADC.PropValue("borderStyleSuggestions")
 %}
-
+#adc_{%= CurrentADC.InstanceId %} button.close-icon {
+    background-color: {%= CurrentADC.PropValue("backgroundColor").ToHexa() %};
+}
+.adc-autocomplete button.close-icon:after {
+    color: {%= CurrentADC.PropValue("color").ToHexa() %};
+}
 /*
 * Control
 */

@@ -24,7 +24,7 @@
     -webkit-appearance: none;
 }
 .adc-autocomplete .autocomplete {
-   width: 95%;
+   width: 100%;
    padding: 10px 0 10px 10px;
    margin: 5px 0;
    outline:0;
@@ -49,7 +49,7 @@
 input[type=text]::-ms-clear {  display: none; width : 0; height: 0; }
 input[type=text]::-ms-reveal {  display: none; width : 0; height: 0; }
 
-button.close-icon:after {
+.adc-autocomplete button.close-icon:after {
     content: "X";
     display: block;
     background-color: transparent;
@@ -61,23 +61,21 @@ button.close-icon:after {
     padding: 2px;
     border-radius: 50%;
     text-align: center;
-    color: black;
     font-weight: normal;
     font-size: 12px;
     cursor: pointer;
 }
 
-button.close-icon {
+.adc-autocomplete button.close-icon {
     border: 1px solid transparent;
-    background-color: transparent;
     display: inline-block;
     vertical-align: middle;
     outline: 0;
     padding: 1px;
     margin: 0;
     position: absolute;
-    bottom: 15px;
-    right: 20px;
+    bottom: 1em;
+    right: 1px;
     width: 20px;
     height: 20px;
     cursor: pointer;
