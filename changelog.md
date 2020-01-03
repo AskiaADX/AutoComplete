@@ -8,3 +8,4 @@
 * v2.0.9 - 2018/09/27 - Jérôme Duparc - Added additional search field
 * v2.0.10 - 2018/10/23 - Jérôme Duparc - Fixed filter value encoding
 * v2.0.11 - 2019/04/23 - Jérôme Duparc - Fixed reset button
+* v2.0.15 - 2020/01/03 - Peter Gabriël - Added support for single coded questions
