@@ -1,29 +1,58 @@
 <div id="adc_{%= CurrentADC.InstanceId %}" class="adc-autocomplete">
     {%
-    Dim inputId
-    Dim inputName
-    Dim inputValue
-	Dim inputSearchValue = ""
-	Dim autofocus = ""
-    If (CurrentADC.PropValue("autofocus") = "autofocus") Then
-        autofocus = "autofocus"
-    EndIf
-Dim ar = CurrentQuestion.ParentLoop.Answers
-Dim selectOnHover =  CurrentADC.PropValue("selectOnHover")
-    Dim i
-    For i = 1 To ar.Count
-    inputName = CurrentQuestion.Iteration(ar[i].Index).InputName()
-    inputId   = inputName
-    inputValue = CurrentQuestion.Iteration(ar[i].Index).InputValue()
-    If (ar[i].Caption = CurrentADC.PropValue("searchField")) Then
-        inputSearchValue = CurrentQuestion.Iteration(ar[i].Index).InputValue()
-    EndIf
+        ' Input settings
+        Dim inputId
+        Dim inputName
+        Dim inputValue
+        Dim inputSearchValue = ""
+
+        ' Get properties
+        Dim autofocus = ""
+        If (CurrentADC.PropValue("autofocus") = "autofocus") Then
+            autofocus = "autofocus"
+        EndIf
+
+        Dim selectOnHover =  CurrentADC.PropValue("selectOnHover")
+
+        ' Generate input fields
+        If (CurrentQuestion.Type = "single") Then
+            inputName = CurrentQuestion.InputName()
+            inputId = inputName
+            inputValue = CurrentQuestion.InputValue()
+
+            ' Get selected answer
+            Dim arrAnswers = CurrentQuestion.Answers
+            Dim idxA
+
+            For idxA = 1 To arrAnswers.Count
+                inputSearchValue = arrAnswers[idxA].Caption
+            Next idxA
     %}
-    <script type="text/javascript">
-      window.value = '{%= selectOnHover %}';
-    </script>
-    <input id="{%= inputId %}" aria-label="{%=inputId%}" class="autocomplete hiddens" type="text" autocomplete="off" name="{%= inputName%}" value="{%:= inputValue %}" />
-    {% Next i%}
+        <input id="{%= inputId %}" aria-label="{%=inputId%}" class="autocomplete hiddens" type="text" autocomplete="off" name="{%= inputName%}" value="{%:= inputValue %}" />
+    {%
+        Else
+            Dim arrParentAnswers = CurrentQuestion.ParentLoop.Answers
+            Dim idxPA
+
+            For idxPA = 1 To arrParentAnswers.Count
+                inputName = CurrentQuestion.Iteration(arrParentAnswers[idxPA].Index).InputName()
+                inputId = inputName
+                inputValue = CurrentQuestion.Iteration(arrParentAnswers[idxPA].Index).InputValue()
+
+                ' Get selected answer
+                If (arrParentAnswers[idxPA].Caption = CurrentADC.PropValue("searchField")) Then
+                    inputSearchValue = CurrentQuestion.Iteration(arrParentAnswers[idxPA].Index).InputValue()
+                EndIf
+    %}
+          <script type="text/javascript">
+            window.value = '{%= selectOnHover %}';
+          </script>
+
+          <input id="{%= inputId %}" aria-label="{%=inputId%}" class="autocomplete hiddens" type="text" autocomplete="off" name="{%= inputName%}" value="{%:= inputValue %}" />
+    {%
+            Next idxPA
+        EndIf
+    %}
     <br />
     <input id="adc_{%= CurrentADC.InstanceId %}_input" aria-label="{%:= CurrentADC.PropValue("placeholder")%}" class="autocomplete" {%= autofocus %} type="search" autocomplete="off" name="adc_{%= CurrentADC.InstanceId %}_input" placeholder="{%:= CurrentADC.PropValue("placeholder") %}" value="{%:= inputSearchValue %}" /><button class="close-icon" type="reset"></button><div class="nomatch"></div>
 </div>
