@@ -42,6 +42,14 @@
   </outputs>
   <properties>
     <category id="General" name="General">
+      <property xsi:type="standardProperty" id="useDatabase" name="Load data from database file" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Load data from database file or use answer options of current question]]></description>
+        <value><![CDATA[yes]]></value>
+        <options>
+          <option value="yes" text="Yes" />
+          <option value="no" text="No" />
+        </options>
+      </property>
       <property xsi:type="standardProperty" id="database" name="Javascript database file path" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[Path of the Javascript database file to include in the document]]></description>
         <value><![CDATA[??ResPath??data.js]]></value>
