@@ -6,7 +6,7 @@
 */
 var autoComplete = (function(){
     // "use strict";
-    
+
     function autoComplete(options){
         if (!document.querySelector) return;
 
@@ -91,13 +91,21 @@ var autoComplete = (function(){
         }
 
         function updateValue() {
-            for (i = 0; n = o.inputIds.length, i < n; i++) {
-                if (o.dataFields()[i] == o.searchField && o.responseInList != 1) {
-                    document.getElementById(o.inputIds[i].toString()).value = that.value;
-                } else {
-                    document.getElementById(o.inputIds[i].toString()).value = '';
-                }
-            }
+          if (o.questionType === 'single') {
+               if (o.responseInList != 1) {
+                   document.getElementById(o.inputIds[0].toString()).value = that.value;
+               } else {
+                   document.getElementById(o.inputIds[0].toString()).value = '';
+               }
+           } else {
+               for (i = 0; n = o.inputIds.length, i < n; i++) {
+                   if (o.dataFields()[i] == o.searchField && o.responseInList != 1) {
+                       document.getElementById(o.inputIds[i].toString()).value = that.value;
+                   } else {
+                       document.getElementById(o.inputIds[i].toString()).value = '';
+                   }
+               }
+           }
         }
 
         var o = {
@@ -111,6 +119,7 @@ var autoComplete = (function(){
             menuClass: '',
             dataFields: [],
             searchField: '',
+            useDatabase: '',
             databaseName: '',
             responseInList: 1,
             searchSeparator: '+',
@@ -128,14 +137,22 @@ var autoComplete = (function(){
             },
             onSelect: function(e, term, item){
                 var obj = JSON.parse(item.getAttribute('data-fullval').replace(/#/g, "\""));
-                var i = 0;
-                for(var key in obj){
-                    var attrValue = obj[key];
-                    document.getElementById(o.inputIds[i].toString()).value = attrValue.toString();
+
+                if (o.questionType === 'single') {
+                    document.getElementById(obj.inputName).value = obj.inputValue;
                     var event = document.createEvent('HTMLEvents');
                     event.initEvent('autocomplete', true, false);
-                    document.getElementById(o.inputIds[i].toString()).dispatchEvent(event);
-                    i++;
+                    document.getElementById(obj.inputName).dispatchEvent(event);
+                } else {
+                    var i = 0;
+                    for (var key in obj) {
+                        var attrValue = obj[key];
+                        document.getElementById(o.inputIds[i].toString()).value = attrValue.toString();
+                        var event = document.createEvent('HTMLEvents');
+                        event.initEvent('autocomplete', true, false);
+                        document.getElementById(o.inputIds[i].toString()).dispatchEvent(event);
+                        i++;
+                    }
                 }
                 if (window.askia
                     && window.arrLiveRoutingShortcut

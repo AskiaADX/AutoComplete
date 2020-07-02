@@ -1,1 +1,58 @@
-<script type="text/javascript" src="{%:= CurrentADC.PropValue("database") %}"></script>
+{%
+    Dim useDatabase = CurrentADC.PropValue("useDatabase")
+    if(useDatabase = "yes") Then
+        ' Load data from file
+%}
+    <script type="text/javascript" src="{%:= CurrentADC.PropValue("database") %}"></script>
+{%
+    ElseIf (useDatabase = "no") Then
+        ' Load data from question
+%}
+    <script type="text/javascript">
+        // Function needed to decode special html characters
+        var decodeEntities = (function() {
+        // this prevents any overhead from creating the object each time
+        var element = document.createElement('div');
+
+        function decodeHTMLEntities (str) {
+            if(str && typeof str === 'string') {
+            // strip script/html tags
+            // str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+            // str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+            element.innerHTML = str;
+            str = element.textContent;
+            element.textContent = '';
+            }
+            return str;
+        }
+        return decodeHTMLEntities;
+        })();
+
+        autoComplete.databases["CURRENTQUESTION"] = [
+{%
+  Dim idx
+  Dim arrResponses = CurrentQuestion.AvailableResponses
+
+  ' Response properties
+  Dim caption
+  Dim entryCode
+  Dim id
+  Dim index
+  Dim inputName
+  Dim inputValue
+
+  For idx = 1 To arrResponses.Count
+    caption = arrResponses[idx].Caption
+    entryCode = arrResponses[idx].EntryCode
+    id = arrResponses[idx].Id
+    index = arrResponses[idx].Index
+    inputName = arrResponses[idx].InputName()
+    inputValue = arrResponses[idx].InputValue()
+%}
+    {"caption":decodeEntities("{%= caption%}"), "entryCode":"{%= entryCode%}", "id":"{%= id%}", "index":"{%= index%}", "inputValue":"{%= inputValue%}",  "inputName":"{%= inputName%}"}{%= On(idx < arrResponses.Count, ",", "") %}
+{%
+  Next idx
+%}
+        ];
+    </script>
+{% EndIf %}

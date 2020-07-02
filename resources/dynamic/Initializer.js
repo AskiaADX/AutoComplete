@@ -39,7 +39,9 @@
     var autocomplete = new autoComplete({
         menuClass: "adc_{%= CurrentADC.InstanceId %}",
         selector: "#adc_{%= CurrentADC.InstanceId %}_input",
-        databaseName: "{%:= CurrentADC.PropValue("databaseName")%}",
+        useDatabase: "{%:= CurrentADC.PropValue("useDatabase")%}",
+        questionType: "{%:= CurrentQuestion.Type%}",
+        databaseName: "{%:= On(CurrentADC.PropValue("useDatabase") = "no", "CURRENTQUESTION",  CurrentADC.PropValue("databaseName")) %}",
         searchField: "{%:= CurrentADC.PropValue("searchField")%}",
         additionalSearchField: "{%:= CurrentADC.PropValue("additionalSearchField")%}",
         filterField: "{%:= CurrentADC.PropValue("filterField")%}",
@@ -50,7 +52,7 @@
         currentQuestion: "{%:= CurrentQuestion.Shortcut %}",
         noMatchFound: "{%:= CurrentADC.PropValue("noMatchFound")%}",
         noMatchOffset: "{%:= CurrentADC.PropValue("noMatchOffset")%}",
-        inputIds: [{%  Dim i %}{% Dim ar = CurrentQuestion.ParentLoop.Responses %}{% Dim inputNames %}{% For i = 1 To ar.Count %}{% inputNames = CurrentQuestion.Iteration(ar[i].Index).InputName() %}"{%= inputNames %}"{%:= On(i < ar.Count, ",","") %}{% Next i %}],
+        inputIds: [{% If(CurrentQuestion.Type = "single") Then %}"{%=CurrentQuestion.InputName()%}"{% Else %}{% Dim i %}{% Dim ar = CurrentQuestion.ParentLoop.Answers %}{% Dim inputNames %}{% For i = 1 To ar.Count %}{% inputNames = CurrentQuestion.Iteration(ar[i].Index).InputName() %}"{%= inputNames %}"{%:= On(i < ar.Count, ",", "") %}{% Next i %}{% EndIf %}],        
         dataFields: function() {
             var fields = [];
             for(var key in autoComplete.databases[this.databaseName][0]){

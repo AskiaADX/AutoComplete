@@ -7,8 +7,8 @@
   <info>
     <name>AutoComplete</name>
     <guid>4b7058ef-4656-4aa4-ae9c-269c8a2810f8</guid>
-    <version>3.0.10</version>
-    <date>2016-03-21</date>
+    <version>3.1.0</version>
+    <date>2020-07-02</date>
     <description><![CDATA[autoComplete: open text box with search capability as google search]]></description>
     <company>Askia</company>
     <author><![CDATA[Jérôme Duparc <jeromed@askia.com>]]></author>
@@ -18,7 +18,7 @@
       <category>General</category>
     </categories>
     <constraints>
-      <constraint on="questions" chapter="false" single="false" multiple="false" numeric="false" date="false" open="true" requireParentLoop="true" requireLoopDepth="1" />
+      <constraint on="questions" chapter="false" single="true" multiple="false" numeric="false" date="false" open="true" requireParentLoop="false" requireLoopDepth="1" />
       <constraint on="controls" responseblock="true" label="false" textbox="true" checkbox="false" listbox="false" radiobutton="false" />
       <constraint on="responses" max="*" min="*" />
     </constraints>
@@ -42,6 +42,14 @@
   </outputs>
   <properties>
     <category id="General" name="General">
+      <property xsi:type="standardProperty" id="useDatabase" name="Load data from database file" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Load data from database file or use answer options of current question]]></description>
+        <value><![CDATA[yes]]></value>
+        <options>
+          <option value="yes" text="Yes" />
+          <option value="no" text="No" />
+        </options>
+      </property>
       <property xsi:type="standardProperty" id="database" name="Javascript database file path" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[Path of the Javascript database file to include in the document]]></description>
         <value><![CDATA[??ResPath??data.js]]></value>
