@@ -11,3 +11,4 @@
 * v3.0.1 - 2019/12/12 - Jérôme Duparc - Fixed rest button
 * v3.0.7 - 2019/08/09 - Jérôme Duparc - Added no match found offset
 * v3.1.0 - 2020/07/02 - Prabath Gamage - Added support for single coded questions
+* v3.1.1 - 2020/09/21 - Prabath Gamage - Fixed # sign not recognized issue

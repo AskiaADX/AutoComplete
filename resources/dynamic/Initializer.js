@@ -52,7 +52,7 @@
         currentQuestion: "{%:= CurrentQuestion.Shortcut %}",
         noMatchFound: "{%:= CurrentADC.PropValue("noMatchFound")%}",
         noMatchOffset: "{%:= CurrentADC.PropValue("noMatchOffset")%}",
-        inputIds: [{% If(CurrentQuestion.Type = "single") Then %}"{%=CurrentQuestion.InputName()%}"{% Else %}{% Dim i %}{% Dim ar = CurrentQuestion.ParentLoop.Answers %}{% Dim inputNames %}{% For i = 1 To ar.Count %}{% inputNames = CurrentQuestion.Iteration(ar[i].Index).InputName() %}"{%= inputNames %}"{%:= On(i < ar.Count, ",", "") %}{% Next i %}{% EndIf %}],        
+        inputIds: [{% If(CurrentQuestion.Type = "single") Then %}"{%=CurrentQuestion.InputName()%}"{% Else %}{% Dim i %}{% Dim ar = CurrentQuestion.ParentLoop.Answers %}{% Dim inputNames %}{% For i = 1 To ar.Count %}{% inputNames = CurrentQuestion.Iteration(ar[i].Index).InputName() %}"{%= inputNames %}"{%:= On(i < ar.Count, ",", "") %}{% Next i %}{% EndIf %}],
         dataFields: function() {
             var fields = [];
             for(var key in autoComplete.databases[this.databaseName][0]){
@@ -129,14 +129,14 @@
                     if (sortFirst === 'yes') {
                         if (beginFirst === true) {
                         	first.push(choices[i][this.searchField]);
-                            completeFirstData.push(JSON.stringify(choices[i]).replace(/"/g, "#"));
+                            completeFirstData.push(JSON.stringify(choices[i]).replace(/"/g, "%"));
                         } else {
                             others.push(choices[i][this.searchField]);
-                            completeOthersData.push(JSON.stringify(choices[i]).replace(/"/g, "#"));
+                            completeOthersData.push(JSON.stringify(choices[i]).replace(/"/g, "%"));
                         }
                     } else {
                     	suggestions.push(choices[i][this.searchField]);
-                        completeData.push(JSON.stringify(choices[i]).replace(/"/g, "#"));
+                        completeData.push(JSON.stringify(choices[i]).replace(/"/g, "%"));
                     }
                 }
             }
