@@ -9,3 +9,5 @@
 * v2.0.10 - 2018/10/23 - Jérôme Duparc - Fixed filter value encoding
 * v2.0.11 - 2019/04/23 - Jérôme Duparc - Fixed reset button
 * v2.0.15 - 2020/01/03 - Peter Gabriël - Added support for single coded questions
+* v2.0.16 - 2020/09/21 - Prabath Gamage - Fix
+* v2.0.17 - 2020/09/2 - Prabath Gamage - Fix
