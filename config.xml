@@ -7,8 +7,8 @@
   <info>
     <name>AutoComplete</name>
     <guid>4b7058ef-4656-4aa4-ae9c-269c8a2810f8</guid>
-    <version>3.1.1</version>
-    <date>2020-09-21</date>
+    <version>3.1.2</version>
+    <date>2020-09-22</date>
     <description><![CDATA[autoComplete: open text box with search capability as google search]]></description>
     <company>Askia</company>
     <author><![CDATA[Jérôme Duparc <jeromed@askia.com>]]></author>

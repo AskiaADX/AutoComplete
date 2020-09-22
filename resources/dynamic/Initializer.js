@@ -129,14 +129,14 @@
                     if (sortFirst === 'yes') {
                         if (beginFirst === true) {
                         	first.push(choices[i][this.searchField]);
-                            completeFirstData.push(JSON.stringify(choices[i]).replace(/"/g, "%"));
+                            completeFirstData.push(JSON.stringify(choices[i]).replace(/"/g, "&quot"));
                         } else {
                             others.push(choices[i][this.searchField]);
-                            completeOthersData.push(JSON.stringify(choices[i]).replace(/"/g, "%"));
+                            completeOthersData.push(JSON.stringify(choices[i]).replace(/"/g, "&quot"));
                         }
                     } else {
                     	suggestions.push(choices[i][this.searchField]);
-                        completeData.push(JSON.stringify(choices[i]).replace(/"/g, "%"));
+                        completeData.push(JSON.stringify(choices[i]).replace(/"/g, "&quot"));
                     }
                 }
             }
