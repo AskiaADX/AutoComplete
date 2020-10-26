@@ -42,7 +42,7 @@
         useDatabase: "{%:= CurrentADC.PropValue("useDatabase")%}",
         questionType: "{%:= CurrentQuestion.Type%}",
         databaseName: "{%:= On(CurrentADC.PropValue("useDatabase") = "no", "CURRENTQUESTION",  CurrentADC.PropValue("databaseName")) %}",
-        searchField: "{%:= CurrentADC.PropValue("searchField")%}",
+        searchField: "{%:= On(CurrentADC.PropValue("useDatabase") = "no", "caption", CurrentADC.PropValue("searchField")) %}",
         additionalSearchField: "{%:= CurrentADC.PropValue("additionalSearchField")%}",
         filterField: "{%:= CurrentADC.PropValue("filterField")%}",
         filterValue: "{%:= CurrentADC.PropValue("filterValue")%}",
