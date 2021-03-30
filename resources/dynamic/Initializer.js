@@ -37,12 +37,13 @@
         };
     }
     var autocomplete = new autoComplete({
+        instanceId: "{%= CurrentADC.InstanceId %}",
         menuClass: "adc_{%= CurrentADC.InstanceId %}",
         selector: "#adc_{%= CurrentADC.InstanceId %}_input",
         useDatabase: "{%:= CurrentADC.PropValue("useDatabase")%}",
         questionType: "{%:= CurrentQuestion.Type%}",
-        databaseName: "{%:= On(CurrentADC.PropValue("useDatabase") = "no", "CURRENTQUESTION",  CurrentADC.PropValue("databaseName")) %}",
-        searchField: "{%:= On(CurrentADC.PropValue("useDatabase") = "no", "caption", CurrentADC.PropValue("searchField")) %}",
+        databaseName: '{%:= On(CurrentADC.PropValue("useDatabase") = "no", "CURRENTQUESTION",  CurrentADC.PropValue("databaseName")) %}',
+        searchField: '{%:= On(CurrentADC.PropValue("useDatabase") = "no", "caption", CurrentADC.PropValue("searchField")) %}',
         additionalSearchField: "{%:= CurrentADC.PropValue("additionalSearchField")%}",
         filterField: "{%:= CurrentADC.PropValue("filterField")%}",
         filterValue: "{%:= CurrentADC.PropValue("filterValue")%}",
@@ -50,9 +51,23 @@
         responseInList: {%:= CurrentADC.PropValue("responseInList")%},
         searchSeparator: "{%:= CurrentADC.PropValue("searchSeparator")%}",
         currentQuestion: "{%:= CurrentQuestion.Shortcut %}",
+        inputName: "{%:= CurrentQuestion.InputName() %}",
         noMatchFound: "{%:= CurrentADC.PropValue("noMatchFound")%}",
         noMatchOffset: "{%:= CurrentADC.PropValue("noMatchOffset")%}",
-        inputIds: [{% If(CurrentQuestion.Type = "single") Then %}"{%=CurrentQuestion.InputName()%}"{% Else %}{% Dim i %}{% Dim ar = CurrentQuestion.ParentLoop.Answers %}{% Dim inputNames %}{% For i = 1 To ar.Count %}{% inputNames = CurrentQuestion.Iteration(ar[i].Index).InputName() %}"{%= inputNames %}"{%:= On(i < ar.Count, ",", "") %}{% Next i %}{% EndIf %}],
+        inputIds: [
+          {% If(CurrentQuestion.Type = "single") Then %}
+          "{%=CurrentQuestion.InputName()%}"
+          {% Else %}
+            {% Dim i %}
+            {% Dim ar = CurrentQuestion.ParentLoop.Answers %}
+            {% Dim inputNames %}
+            {% For i = 1 To ar.Count %}
+              {% inputNames = CurrentQuestion.Iteration(ar[i].Index).InputName() %}
+              "{%= inputNames %}"
+              {%:= On(i < ar.Count, ",", "") %}
+            {% Next i %}
+          {% EndIf %}
+        ],
         dataFields: function() {
             var fields = [];
             for(var key in autoComplete.databases[this.databaseName][0]){
@@ -85,6 +100,7 @@
         	var serchFields = (this.additionalSearchField.toString().trim().split(',') != '') ? arrTempSearch.concat(this.additionalSearchField.toString().split(',')) : arrTempSearch;
         	var temp = false;
             for (i = 0; n = choices.length, i < n;i++) {
+                choices[i].inputName = this.inputName;
                 count = 0;
                 beginFirst = false;
                 for (j = 0; m = arrTerms.length, j < m;j++) {

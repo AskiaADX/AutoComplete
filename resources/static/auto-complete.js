@@ -124,6 +124,7 @@ var autoComplete = (function(){
             responseInList: 1,
             searchSeparator: '+',
             currentQuestion: '',
+            inputName: '',
             noMatchFound: '',
             noMatchOffset: '',
             inputIds: [],
@@ -139,10 +140,10 @@ var autoComplete = (function(){
                 var obj = JSON.parse(item.getAttribute('data-fullval'));
 
                 if (o.questionType === 'single') {
-                    document.getElementById(obj.inputName).value = obj.inputValue;
+                    document.getElementById(options.inputName).value = obj.inputValue;
                     var event = document.createEvent('HTMLEvents');
                     event.initEvent('autocomplete', true, false);
-                    document.getElementById(obj.inputName).dispatchEvent(event);
+                    document.getElementById(options.inputName).dispatchEvent(event);
                 } else {
                     var i = 0;
                     for (var key in obj) {
@@ -162,6 +163,7 @@ var autoComplete = (function(){
                 }
             }
         };
+
         for (var k in options) { if (options.hasOwnProperty(k)) o[k] = options[k]; }
 
         // init
@@ -218,7 +220,6 @@ var autoComplete = (function(){
                 if(selectOnHover == "yes"){
                   that.value = this.getAttribute('data-val');
                 }
-
             }, that.sc);
 
             live('autocomplete-suggestion', 'mousedown', function(e){
@@ -255,6 +256,7 @@ var autoComplete = (function(){
                         nItem++;
                     }
                     that.sc.innerHTML = s;
+
                     that.updateSC(0);
                     that.nchild = nItem;
                     document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","") + ' .nomatch').innerHTML = '';
