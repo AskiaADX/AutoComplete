@@ -1,0 +1,50 @@
+{%
+    ' Input settings
+    Dim inputId
+    Dim inputName
+    Dim inputValue
+    Dim inputSearchValue = ""
+
+    ' Get properties
+    Dim autofocus = ""
+    If (CurrentADC.PropValue("autofocus") = "autofocus") Then
+        autofocus = "autofocus"
+    EndIf
+
+    Dim selectOnHover =  CurrentADC.PropValue("selectOnHover")
+
+    Dim arrParentAnswers = CurrentQuestion.ParentLoop.Answers
+    Dim idxPA
+
+    For idxPA = 1 To arrParentAnswers.Count
+        inputName = CurrentQuestion.Iteration(arrParentAnswers[idxPA].Index).InputName()
+        inputId = inputName
+        inputValue = CurrentQuestion.Iteration(arrParentAnswers[idxPA].Index).InputValue()
+
+        ' Get selected answer
+        If (arrParentAnswers[idxPA].Caption = CurrentADC.PropValue("searchField")) Then
+            inputSearchValue = CurrentQuestion.Iteration(arrParentAnswers[idxPA].Index).InputValue()
+        EndIf
+%}
+      <script type="text/javascript">
+        window.value = '{%= selectOnHover %}';
+      </script>
+
+      <input id="{%= inputId %}" aria-label="{%=inputId%}" class="autocomplete hiddens" type="text" autocomplete="off" name="{%= inputName%}" value="{%:= inputValue %}" />
+{%
+        Next idxPA
+%}
+  <br />
+  {%
+  Dim highlightInput = CurrentADC.PropValue("highlightInputOnError")
+  Dim highlightConditionBlockingMessage = CurrentADC.PropValue("highlightConditionBlockingErrorMessage").ToLowerCase().Trim()
+  Dim highlightConditionNonBlockingMessage = CurrentADC.PropValue("highlightConditionNonBlockingErrorMessage").ToLowerCase().Trim()
+Dim classHighlight = On(highlightInput = "yes" And highlightConditionBlockingMessage = "true"," blocking_errormessage",On(highlightInput = "yes" And highlightConditionNonBlockingMessage = "true"," nonblocking_errormessage",""))
+Dim placeholder = CurrentADC.PropValue("placeholder")
+  %}
+
+  <input id="adc_{%= CurrentADC.InstanceId %}_input" aria-label="{%:= placeholder %}"
+  class="autocomplete{%= classHighlight %}" {%= autofocus %} type="search" autocomplete="off" name="adc_{%= CurrentADC.InstanceId %}_input"
+  placeholder="{%:= placeholder %}" value="{%:= inputSearchValue %}" />
+  <button class="close-icon" type="reset"></button>
+  <div class="nomatch"></div>

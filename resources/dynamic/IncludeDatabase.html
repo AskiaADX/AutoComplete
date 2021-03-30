@@ -27,7 +27,6 @@
         }
         return decodeHTMLEntities;
         })();
-
         autoComplete.databases["CURRENTQUESTION"] = [
 {%
   Dim idx
@@ -46,10 +45,10 @@
     entryCode = arrResponses[idx].EntryCode
     id = arrResponses[idx].Id
     index = arrResponses[idx].Index
-    inputName = arrResponses[idx].InputName()
+    inputName = CurrentQuestion.InputName()
     inputValue = arrResponses[idx].InputValue()
 %}
-    {"caption":decodeEntities("{%= caption%}"), "entryCode":"{%= entryCode%}", "id":"{%= id%}", "index":"{%= index%}", "inputValue":"{%= inputValue%}",  "inputName":"{%= inputName%}"}{%= On(idx < arrResponses.Count, ",", "") %}
+    {"caption":decodeEntities("{%= caption%}"), "entryCode":"{%= entryCode%}", "id":"{%= id%}", "index":"{%= index%}", "inputValue":"{%= inputValue%}",  "inputName":""}{%= On(idx < arrResponses.Count, ",", "") %}
 {%
   Next idx
 %}
