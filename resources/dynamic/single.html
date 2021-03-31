@@ -43,10 +43,6 @@
   Dim placeholder = CurrentADC.PropValue("placeholder")
   %}
 
-  <script type="text/javascript">
-    console.log('{%= inputSearchValue %}');
-  </script>
-
   <input id="adc_{%= CurrentADC.InstanceId %}_input" aria-label="{%:= placeholder %}"
   class="autocomplete{%= classHighlight %}" {%= autofocus %} type="search" autocomplete="off" name="adc_{%= CurrentADC.InstanceId %}_input"
   placeholder="{%:= placeholder %}" value="{%:= inputSearchValue %}" />

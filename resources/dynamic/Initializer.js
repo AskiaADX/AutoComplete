@@ -175,14 +175,14 @@
                     if (sortFirst === 'yes') {
                         if (beginFirst === true) {
                         	first.push(choices[i][this.searchField]);
-                            completeFirstData.push(JSON.stringify(choices[i]).replace(/"/g, "&quot;"));
+                            completeFirstData.push(JSON.stringify(choices[i]).replace(/"/g, '&quot;'));
                         } else {
                             others.push(choices[i][this.searchField]);
-                            completeOthersData.push(JSON.stringify(choices[i]).replace(/"/g, "&quot;"));
+                            completeOthersData.push(JSON.stringify(choices[i]).replace(/"/g, '&quot;'));
                         }
                     } else {
                     	suggestions.push(choices[i][this.searchField]);
-                        completeData.push(JSON.stringify(choices[i]).replace(/"/g, "&quot;"));
+                        completeData.push(JSON.stringify(choices[i]).replace(/"/g, '&quot;'));
                     }
                 }
             }
