@@ -1,4 +1,23 @@
 (function () {
+    // Function needed to decode special html characters
+    var decodeEntities = (function() {
+    // this prevents any overhead from creating the object each time
+    var element = document.createElement('div');
+
+    function decodeHTMLEntities (str) {
+        if(str && typeof str === 'string') {
+        // strip script/html tags
+        // str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+        // str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+        element.innerHTML = str;
+        str = element.textContent;
+        element.textContent = '';
+        }
+        return str;
+    }
+    return decodeHTMLEntities;
+    })();
+    // autoComplete.databases["CURRENTQUESTION"] = [
 
     function notUndefined (element) {
         return typeof element !== "undefined";
@@ -36,13 +55,14 @@
             return this.replace(/^\s+|\s+$/gm, '');
         };
     }
+
     var autocomplete = new autoComplete({
         instanceId: "{%= CurrentADC.InstanceId %}",
         menuClass: "adc_{%= CurrentADC.InstanceId %}",
         selector: "#adc_{%= CurrentADC.InstanceId %}_input",
         useDatabase: "{%:= CurrentADC.PropValue("useDatabase")%}",
         questionType: "{%:= CurrentQuestion.Type%}",
-        databaseName: '{%:= On(CurrentADC.PropValue("useDatabase") = "no", "CURRENTQUESTION",  CurrentADC.PropValue("databaseName")) %}',
+        databaseName: '{%:= CurrentADC.PropValue("databaseName") %}',
         searchField: '{%:= On(CurrentADC.PropValue("useDatabase") = "no", "caption", CurrentADC.PropValue("searchField")) %}',
         additionalSearchField: "{%:= CurrentADC.PropValue("additionalSearchField")%}",
         filterField: "{%:= CurrentADC.PropValue("filterField")%}",
@@ -54,6 +74,11 @@
         inputName: "{%:= CurrentQuestion.InputName() %}",
         noMatchFound: "{%:= CurrentADC.PropValue("noMatchFound")%}",
         noMatchOffset: "{%:= CurrentADC.PropValue("noMatchOffset")%}",
+        items :[
+          {% If(CurrentQuestion.Type = "single") Then %}
+          {%:= CurrentADC.GetContent("dynamic/single.js").ToText()%}
+          {% EndIf %}
+        ],
         inputIds: [
           {% If(CurrentQuestion.Type = "single") Then %}
           "{%=CurrentQuestion.InputName()%}"
@@ -84,8 +109,13 @@
         	var l = 0;
         	var k = 0;
         	var count = 0;
-            var choices = autoComplete.databases[this.databaseName];
-            var suggestions = [];
+          var choices;
+          if (this.questionType == "single") {
+            choices = this.items;
+          } else {
+            choices = autoComplete.databases[this.databaseName];
+          }
+          var suggestions = [];
         	var beginFirst = false;
         	var first = [];
         	var others = [];

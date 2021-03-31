@@ -14,4 +14,5 @@
 * v3.1.1 - 2020/09/21 - Prabath Gamage - Fixed # sign not recognized issue
 * v3.1.2 - 2020/09/22 - Prabath Gamage - add &quot instead of % character
 * v3.1.3 - 2020/10/26 - Prabath Gamage - Fixed searchField : "caption" when useDatabase : "no"
-* v3.1.4 - 2021/03/30 - Prabath Gamage - dynamic directory reorganized 
+* v3.1.4 - 2021/03/30 - Prabath Gamage - dynamic directory reorganized
+* v3.1.5 - 2021/03/31 - Prabath Gamage - single coded support when screens are merged 

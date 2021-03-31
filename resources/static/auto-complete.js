@@ -147,12 +147,14 @@ var autoComplete = (function(){
                 } else {
                     var i = 0;
                     for (var key in obj) {
+                      if (options.inputIds.length > i) {
                         var attrValue = obj[key];
-                        document.getElementById(o.inputIds[i].toString()).value = attrValue.toString();
+                        document.getElementById(options.inputIds[i].toString()).value = attrValue.toString();
                         var event = document.createEvent('HTMLEvents');
                         event.initEvent('autocomplete', true, false);
-                        document.getElementById(o.inputIds[i].toString()).dispatchEvent(event);
+                        document.getElementById(options.inputIds[i].toString()).dispatchEvent(event);
                         i++;
+                      }
                     }
                 }
                 if (window.askia
