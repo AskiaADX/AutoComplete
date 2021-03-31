@@ -1,4 +1,23 @@
 (function () {
+    // Function needed to decode special html characters
+    var decodeEntities = (function() {
+    // this prevents any overhead from creating the object each time
+    var element = document.createElement('div');
+
+    function decodeHTMLEntities (str) {
+        if(str && typeof str === 'string') {
+        // strip script/html tags
+        // str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+        // str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+        element.innerHTML = str;
+        str = element.textContent;
+        element.textContent = '';
+        }
+        return str;
+    }
+    return decodeHTMLEntities;
+    })();
+    // autoComplete.databases["CURRENTQUESTION"] = [
 
     function notUndefined (element) {
         return typeof element !== "undefined";
@@ -36,13 +55,15 @@
             return this.replace(/^\s+|\s+$/gm, '');
         };
     }
+
     var autocomplete = new autoComplete({
+        instanceId: "{%= CurrentADC.InstanceId %}",
         menuClass: "adc_{%= CurrentADC.InstanceId %}",
         selector: "#adc_{%= CurrentADC.InstanceId %}_input",
         useDatabase: "{%:= CurrentADC.PropValue("useDatabase")%}",
         questionType: "{%:= CurrentQuestion.Type%}",
-        databaseName: "{%:= On(CurrentADC.PropValue("useDatabase") = "no", "CURRENTQUESTION",  CurrentADC.PropValue("databaseName")) %}",
-        searchField: "{%:= On(CurrentADC.PropValue("useDatabase") = "no", "caption", CurrentADC.PropValue("searchField")) %}",
+        databaseName: '{%:= CurrentADC.PropValue("databaseName") %}',
+        searchField: '{%:= On(CurrentADC.PropValue("useDatabase") = "no", "caption", CurrentADC.PropValue("searchField")) %}',
         additionalSearchField: "{%:= CurrentADC.PropValue("additionalSearchField")%}",
         filterField: "{%:= CurrentADC.PropValue("filterField")%}",
         filterValue: "{%:= CurrentADC.PropValue("filterValue")%}",
@@ -50,9 +71,28 @@
         responseInList: {%:= CurrentADC.PropValue("responseInList")%},
         searchSeparator: "{%:= CurrentADC.PropValue("searchSeparator")%}",
         currentQuestion: "{%:= CurrentQuestion.Shortcut %}",
+        inputName: "{%:= CurrentQuestion.InputName() %}",
         noMatchFound: "{%:= CurrentADC.PropValue("noMatchFound")%}",
         noMatchOffset: "{%:= CurrentADC.PropValue("noMatchOffset")%}",
-        inputIds: [{% If(CurrentQuestion.Type = "single") Then %}"{%=CurrentQuestion.InputName()%}"{% Else %}{% Dim i %}{% Dim ar = CurrentQuestion.ParentLoop.Answers %}{% Dim inputNames %}{% For i = 1 To ar.Count %}{% inputNames = CurrentQuestion.Iteration(ar[i].Index).InputName() %}"{%= inputNames %}"{%:= On(i < ar.Count, ",", "") %}{% Next i %}{% EndIf %}],
+        items :[
+          {% If(CurrentQuestion.Type = "single") Then %}
+          {%:= CurrentADC.GetContent("dynamic/single.js").ToText()%}
+          {% EndIf %}
+        ],
+        inputIds: [
+          {% If(CurrentQuestion.Type = "single") Then %}
+          "{%=CurrentQuestion.InputName()%}"
+          {% Else %}
+            {% Dim i %}
+            {% Dim ar = CurrentQuestion.ParentLoop.Answers %}
+            {% Dim inputNames %}
+            {% For i = 1 To ar.Count %}
+              {% inputNames = CurrentQuestion.Iteration(ar[i].Index).InputName() %}
+              "{%= inputNames %}"
+              {%:= On(i < ar.Count, ",", "") %}
+            {% Next i %}
+          {% EndIf %}
+        ],
         dataFields: function() {
             var fields = [];
             for(var key in autoComplete.databases[this.databaseName][0]){
@@ -69,8 +109,13 @@
         	var l = 0;
         	var k = 0;
         	var count = 0;
-            var choices = autoComplete.databases[this.databaseName];
-            var suggestions = [];
+          var choices;
+          if (this.questionType == "single") {
+            choices = this.items;
+          } else {
+            choices = autoComplete.databases[this.databaseName];
+          }
+          var suggestions = [];
         	var beginFirst = false;
         	var first = [];
         	var others = [];
@@ -85,6 +130,7 @@
         	var serchFields = (this.additionalSearchField.toString().trim().split(',') != '') ? arrTempSearch.concat(this.additionalSearchField.toString().split(',')) : arrTempSearch;
         	var temp = false;
             for (i = 0; n = choices.length, i < n;i++) {
+                choices[i].inputName = this.inputName;
                 count = 0;
                 beginFirst = false;
                 for (j = 0; m = arrTerms.length, j < m;j++) {
@@ -129,14 +175,14 @@
                     if (sortFirst === 'yes') {
                         if (beginFirst === true) {
                         	first.push(choices[i][this.searchField]);
-                            completeFirstData.push(JSON.stringify(choices[i]).replace(/"/g, "&quot;"));
+                            completeFirstData.push(JSON.stringify(choices[i]).replace(/"/g, '&quot;'));
                         } else {
                             others.push(choices[i][this.searchField]);
-                            completeOthersData.push(JSON.stringify(choices[i]).replace(/"/g, "&quot;"));
+                            completeOthersData.push(JSON.stringify(choices[i]).replace(/"/g, '&quot;'));
                         }
                     } else {
                     	suggestions.push(choices[i][this.searchField]);
-                        completeData.push(JSON.stringify(choices[i]).replace(/"/g, "&quot;"));
+                        completeData.push(JSON.stringify(choices[i]).replace(/"/g, '&quot;'));
                     }
                 }
             }
