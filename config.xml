@@ -7,8 +7,8 @@
   <info>
     <name>AutoComplete</name>
     <guid>4b7058ef-4656-4aa4-ae9c-269c8a2810f8</guid>
-    <version>3.1.6</version>
-    <date>2021-03-31</date>
+    <version>3.2.0</version>
+    <date>2021-11-10</date>
     <description><![CDATA[autoComplete: open text box with search capability as google search]]></description>
     <company>Askia</company>
     <author><![CDATA[Jérôme Duparc <jeromed@askia.com>]]></author>
@@ -164,6 +164,14 @@
       <property xsi:type="standardProperty" id="selectOnHover" name="Select on hover" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[Select suggestions on mouse hover]]></description>
         <value><![CDATA[no]]></value>
+        <options>
+          <option value="yes" text="Yes" />
+          <option value="no" text="No" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="autoSelect" name="Auto select" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Auto select when only one result is found]]></description>
+        <value><![CDATA[yes]]></value>
         <options>
           <option value="yes" text="Yes" />
           <option value="no" text="No" />

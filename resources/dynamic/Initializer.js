@@ -74,6 +74,7 @@
         inputName: "{%:= CurrentQuestion.InputName() %}",
         noMatchFound: "{%:= CurrentADC.PropValue("noMatchFound")%}",
         noMatchOffset: "{%:= CurrentADC.PropValue("noMatchOffset")%}",
+        autoSelect: "{%:= CurrentADC.PropValue("autoSelect")%}" || 1,
         items :[
           {% If(CurrentQuestion.Type = "single") Then %}
           {%:= CurrentADC.GetContent("dynamic/single.js").ToText()%}

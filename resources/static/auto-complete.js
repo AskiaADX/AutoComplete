@@ -263,6 +263,20 @@ var autoComplete = (function(){
                     that.nchild = nItem;
                     document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","") + ' .nomatch').innerHTML = '';
                     removeClass(document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","")),"marginbottom");
+
+                    // Auto select the only result found
+                    if (options.autoSelect == 'yes' & data.length == 1) {
+                      let firstData = document.querySelector('.autocomplete-suggestions').firstElementChild;
+                      var v = firstData.getAttribute('data-val');
+                      that.value = v;
+                      that.last_val = v;
+                      that.nchild = 1;
+                      o.onSelect(null, null, firstData);
+                      setTimeout(function(){
+                        that.sc.style.display = 'none';
+                      }, 350);
+                    }
+
                 } else {
                 	that.sc.style.display = 'none';
                     document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","") + ' .nomatch').innerHTML = o.noMatchFound;
