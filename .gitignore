@@ -32,3 +32,6 @@ gruntfile.js
 ################
 .eslintrc.json
 
+# TMP #
+################
+*.tmp/
