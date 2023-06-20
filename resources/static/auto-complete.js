@@ -266,7 +266,7 @@ var autoComplete = (function(){
 
                     // Auto select the only result found
                     if (options.autoSelect == 'yes' & data.length == 1) {
-                      let firstData = document.querySelector('.autocomplete-suggestions').firstElementChild;
+                      let firstData = that.sc.firstElementChild;
                       var v = firstData.getAttribute('data-val');
                       that.value = v;
                       that.last_val = v;

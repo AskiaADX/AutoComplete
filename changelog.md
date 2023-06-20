@@ -18,3 +18,4 @@
     * v3.1.5 - 2021/03/31 - Prabath Gamage - single coded support when screens are merged
     * v3.1.6 - 2021/03/31 - Prabath Gamage - json encode/parse issue fixed
   * v3.2.0 - 2021/11/10 - Prabath Gamage - Auto select when one result found
+    * v3.2.1 - 2023/06/20 - Prabath Gamage - A tiny functional fix
