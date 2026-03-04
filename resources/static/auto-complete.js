@@ -134,7 +134,7 @@ var autoComplete = (function(){
                 var excapedSearchSeparator = o.searchSeparator.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$]/g, "\\$&");
                 var splitRegExp = new RegExp(" |" + excapedSearchSeparator,"gi");
                 var re = new RegExp(search.split(splitRegExp).join('|').replace(/\\\|/gi, "|"), "gi");
-                return '<div class="autocomplete-suggestion" data-val="' + item + '" data-fullval="' + fullItem + '">' + item.toString().replace(re, function (x) {return "<b>" + x + "</b>";}) + '</div>';
+                return '<div class="autocomplete-suggestion" data-val="' + item + '" data-fullval="' + encodeURIComponent(fullItem) + '">' + item.toString().replace(re, function (x) {return "<b>" + x + "</b>";}) + '</div>';
             },
             onSelect: function(e, term, item){
                 var obj = JSON.parse(item.getAttribute('data-fullval'));
