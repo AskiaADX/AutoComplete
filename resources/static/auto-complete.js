@@ -137,7 +137,7 @@ var autoComplete = (function(){
                 return '<div class="autocomplete-suggestion" data-val="' + encodeURIComponent(item) + '" data-fullval="' + encodeURIComponent(fullItem) + '">' + item.toString().replace(re, function (x) {return "<b>" + x + "</b>";}) + '</div>';
             },
             onSelect: function(e, term, item){
-                var obj = JSON.parse(item.getAttribute('data-fullval'));
+                var obj = JSON.parse(decodeURIComponent(item.getAttribute('data-fullval')));
 
                 if (o.questionType === 'single') {
                     document.getElementById(options.inputName).value = obj.inputValue;
