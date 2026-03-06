@@ -220,13 +220,13 @@ var autoComplete = (function(){
 
                 var selectOnHover = window.value;
                 if(selectOnHover == "yes"){
-                  that.value = this.getAttribute('data-val');
+                  that.value = decodeURIComponent(this.getAttribute('data-val'));
                 }
             }, that.sc);
 
             live('autocomplete-suggestion', 'mousedown', function(e){
                 if (hasClass(this, 'autocomplete-suggestion')) { // else outside click
-                    var v = this.getAttribute('data-val');
+                    var v = decodeURIComponent(this.getAttribute('data-val'));
                     that.value = v;
                     that.last_val = v;
                     that.nchild = 1;
@@ -267,7 +267,7 @@ var autoComplete = (function(){
                     // Auto select the only result found
                     if (options.autoSelect == 'yes' & data.length == 1) {
                       let firstData = that.sc.firstElementChild;
-                      var v = firstData.getAttribute('data-val');
+                      var v = decodeURIComponent(firstData.getAttribute('data-val'));
                       that.value = v;
                       that.last_val = v;
                       that.nchild = 1;
@@ -293,13 +293,13 @@ var autoComplete = (function(){
                     if (!sel) {
                         next = (key == 40) ? that.sc.querySelector('.autocomplete-suggestion') : that.sc.childNodes[that.sc.childNodes.length - 1]; // first : last
                         next.className += ' selected';
-                        that.value = next.getAttribute('data-val');
+                        that.value = decodeURIComponent(next.getAttribute('data-val'));
                     } else {
                         next = (key == 40) ? sel.nextSibling : sel.previousSibling;
                         if (next) {
                             sel.className = sel.className.replace(' selected', '');
                             next.className += ' selected';
-                            that.value = next.getAttribute('data-val');
+                            that.value = decodeURIComponent(next.getAttribute('data-val'));
                         }
                         else { sel.className = sel.className.replace(' selected', ''); that.value = that.last_val; next = 0; }
                     }
@@ -310,7 +310,7 @@ var autoComplete = (function(){
                 else if (key == 27) { that.value = that.last_val; that.sc.style.display = 'none'; }
                 // enter
                 else if (key == 13) {
-                    if (sel && that.sc.style.display != 'none') { o.onSelect(e, sel.getAttribute('data-val'), sel); that.last_val = sel.getAttribute('data-val'); that.nchild = 1; setTimeout(function(){ that.sc.style.display = 'none'; }, 20); }
+                    if (sel && that.sc.style.display != 'none') { o.onSelect(e, decodeURIComponent(sel.getAttribute('data-val')), sel); that.last_val = decodeURIComponent(sel.getAttribute('data-val')); that.nchild = 1; setTimeout(function(){ that.sc.style.display = 'none'; }, 20); }
                     return false;
                 }
             };
