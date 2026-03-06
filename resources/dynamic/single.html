@@ -30,10 +30,18 @@
 
   <script type="text/javascript">
     window.value = '{%= selectOnHover %}';
+    function escapeHtmlAttr(value) {
+    if (value === undefined || value === null) return "";
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+}
   </script>
 
-  <input id="{%= inputId %}" aria-label="{%=inputId%}" class="autocomplete hiddens" type="text" autocomplete="off" name="{%= inputName%}" value="{%:= inputValue %}" />
-
+  <!-- <input id="{%= inputId %}" aria-label="{%=inputId%}" class="autocomplete hiddens" type="text" autocomplete="off" name="{%= inputName%}" value="{%:= inputValue %}" /> -->
+  <input id="{%= inputId %}" aria-label="{%=inputId%}" class="autocomplete hiddens" type="text" autocomplete="off" name="{%= inputName%}" value="{%:= escapeHtmlAttr(inputValue) %}" />
   <br />
   {%
   Dim highlightInput = CurrentADC.PropValue("highlightInputOnError")
