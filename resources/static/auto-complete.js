@@ -77,6 +77,7 @@ var autoComplete = (function(){
                 elem.attachEvent("on" + event, attachHandler);
             }
         }
+
         function removeEvent(el, type, handler){
             // if (el.removeEventListener) not working in IE11
             if (el.detachEvent) el.detachEvent('on'+type, handler); else el.removeEventListener(type, handler);
@@ -91,21 +92,21 @@ var autoComplete = (function(){
         }
 
         function updateValue() {
-          if (o.questionType === 'single') {
-               if (o.responseInList != 1) {
-                   document.getElementById(o.inputIds[0].toString()).value = that.value;
-               } else {
-                   document.getElementById(o.inputIds[0].toString()).value = '';
-               }
-           } else {
-               for (i = 0; n = o.inputIds.length, i < n; i++) {
-                   if (o.dataFields()[i] == o.searchField && o.responseInList != 1) {
-                       document.getElementById(o.inputIds[i].toString()).value = that.value;
-                   } else {
-                       document.getElementById(o.inputIds[i].toString()).value = '';
-                   }
-               }
-           }
+            if (o.questionType === 'single') {
+                if (o.responseInList != 1) {
+                    document.getElementById(o.inputIds[0].toString()).value = that.value;
+                } else {
+                    document.getElementById(o.inputIds[0].toString()).value = '';
+                }
+            } else {
+                for (i = 0; n = o.inputIds.length, i < n; i++) {
+                    if (o.dataFields()[i] == o.searchField && o.responseInList != 1) {
+                        document.getElementById(o.inputIds[i].toString()).value = that.value;
+                    } else {
+                        document.getElementById(o.inputIds[i].toString()).value = '';
+                    }
+                }
+            }
         }
 
         var o = {
@@ -132,12 +133,15 @@ var autoComplete = (function(){
                 // escape special characters
                 search = search.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$]/g, '\\$&');
                 var excapedSearchSeparator = o.searchSeparator.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$]/g, "\\$&");
-                var splitRegExp = new RegExp(" |" + excapedSearchSeparator,"gi");
+                var splitRegExp = new RegExp(" |" + excapedSearchSeparator, "gi");
                 var re = new RegExp(search.split(splitRegExp).join('|').replace(/\\\|/gi, "|"), "gi");
-                return '<div class="autocomplete-suggestion" data-val="' + encodeURIComponent(item) + '" data-fullval="' + encodeURIComponent(fullItem) + '">' + item.toString().replace(re, function (x) {return "<b>" + x + "</b>";}) + '</div>';
+
+                return '<div class="autocomplete-suggestion">' +
+                    item.toString().replace(re, function (x) { return "<b>" + x + "</b>"; }) +
+                    '</div>';
             },
             onSelect: function(e, term, item){
-                var obj = JSON.parse(decodeURIComponent(item.getAttribute('data-fullval')));
+                var obj = (typeof item._fullData === 'string') ? JSON.parse(item._fullData) : item._fullData;
 
                 if (o.questionType === 'single') {
                     document.getElementById(options.inputName).value = obj.inputValue;
@@ -147,14 +151,14 @@ var autoComplete = (function(){
                 } else {
                     var i = 0;
                     for (var key in obj) {
-                      if (options.inputIds.length > i) {
-                        var attrValue = obj[key];
-                        document.getElementById(options.inputIds[i].toString()).value = attrValue.toString();
-                        var event = document.createEvent('HTMLEvents');
-                        event.initEvent('autocomplete', true, false);
-                        document.getElementById(options.inputIds[i].toString()).dispatchEvent(event);
-                        i++;
-                      }
+                        if (options.inputIds.length > i) {
+                            var attrValue = obj[key];
+                            document.getElementById(options.inputIds[i].toString()).value = attrValue.toString();
+                            var event = document.createEvent('HTMLEvents');
+                            event.initEvent('autocomplete', true, false);
+                            document.getElementById(options.inputIds[i].toString()).dispatchEvent(event);
+                            i++;
+                        }
                     }
                 }
                 if (window.askia
@@ -170,12 +174,12 @@ var autoComplete = (function(){
 
         // init
         var elems = typeof o.selector == 'object' ? [o.selector] : document.querySelectorAll(o.selector);
-        for (var i=0; n = elems.length, i < n; i++) {
+        for (var i = 0; n = elems.length, i < n; i++) {
             var that = elems[i];
 
             // create suggestions container "sc"
             that.sc = document.createElement('div');
-            that.sc.className = 'autocomplete-suggestions '+o.menuClass;
+            that.sc.className = 'autocomplete-suggestions ' + o.menuClass;
 
             that.autocompleteAttr = that.getAttribute('autocomplete');
             that.setAttribute('autocomplete', 'off');
@@ -219,14 +223,14 @@ var autoComplete = (function(){
                 this.className += ' selected';
 
                 var selectOnHover = window.value;
-                if(selectOnHover == "yes"){
-                  that.value = decodeURIComponent(this.getAttribute('data-val'));
+                if (selectOnHover == "yes") {
+                    that.value = this._value;
                 }
             }, that.sc);
 
             live('autocomplete-suggestion', 'mousedown', function(e){
                 if (hasClass(this, 'autocomplete-suggestion')) { // else outside click
-                    var v = decodeURIComponent(this.getAttribute('data-val'));
+                    var v = this._value;
                     that.value = v;
                     that.last_val = v;
                     that.nchild = 1;
@@ -240,47 +244,53 @@ var autoComplete = (function(){
                 if (!over_sb) {
                     that.value = that.last_val;
                     that.sc.style.display = 'none';
-                    if (e.relatedTarget !== null && hasClass(e.relatedTarget, "close-icon")) removeClass(document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","")),"marginbottom");
+                    if (e.relatedTarget !== null && hasClass(e.relatedTarget, "close-icon")) removeClass(document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","")), "marginbottom");
                     setTimeout(function(){ that.sc.style.display = 'none'; }, 350); // hide suggestions on fast input
                 } else if (that !== document.activeElement) setTimeout(function(){ that.focus(); }, 20);
             };
             addEvent(that, 'blur', that.blurHandler);
 
-            var suggest = function(data,fullData){
+            var suggest = function(data, fullData){
                 var val = that.value;
                 var nItem = 0;
                 that.cache[val] = data;
                 that.fullCache[val] = fullData;
                 if (data.length && val.length >= o.minChars) {
                     var s = '';
-                    for (var i=0; n = data.length, i < n;i++) {
+                    for (var i = 0; n = data.length, i < n; i++) {
                         s += o.renderItem(data[i], val, fullData[i]);
                         nItem++;
                     }
                     that.sc.innerHTML = s;
 
+                    var suggestionNodes = that.sc.querySelectorAll('.autocomplete-suggestion');
+                    for (var j = 0; j < suggestionNodes.length; j++) {
+                        suggestionNodes[j]._value = data[j];
+                        suggestionNodes[j]._fullData = fullData[j];
+                    }
+
                     that.updateSC(0);
                     that.nchild = nItem;
                     document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","") + ' .nomatch').innerHTML = '';
-                    removeClass(document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","")),"marginbottom");
+                    removeClass(document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","")), "marginbottom");
 
                     // Auto select the only result found
                     if (options.autoSelect == 'yes' & data.length == 1) {
-                      let firstData = that.sc.firstElementChild;
-                      var v = decodeURIComponent(firstData.getAttribute('data-val'));
-                      that.value = v;
-                      that.last_val = v;
-                      that.nchild = 1;
-                      o.onSelect(null, null, firstData);
-                      setTimeout(function(){
-                        that.sc.style.display = 'none';
-                      }, 350);
+                        let firstData = that.sc.firstElementChild;
+                        var v = firstData._value;
+                        that.value = v;
+                        that.last_val = v;
+                        that.nchild = 1;
+                        o.onSelect(null, null, firstData);
+                        setTimeout(function(){
+                            that.sc.style.display = 'none';
+                        }, 350);
                     }
 
                 } else {
-                	that.sc.style.display = 'none';
+                    that.sc.style.display = 'none';
                     document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","") + ' .nomatch').innerHTML = o.noMatchFound;
-                    addClass(document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","")),"marginbottom");
+                    addClass(document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","")), "marginbottom");
                 }
             };
 
@@ -293,13 +303,13 @@ var autoComplete = (function(){
                     if (!sel) {
                         next = (key == 40) ? that.sc.querySelector('.autocomplete-suggestion') : that.sc.childNodes[that.sc.childNodes.length - 1]; // first : last
                         next.className += ' selected';
-                        that.value = decodeURIComponent(next.getAttribute('data-val'));
+                        that.value = next._value;
                     } else {
                         next = (key == 40) ? sel.nextSibling : sel.previousSibling;
                         if (next) {
                             sel.className = sel.className.replace(' selected', '');
                             next.className += ' selected';
-                            that.value = decodeURIComponent(next.getAttribute('data-val'));
+                            that.value = next._value;
                         }
                         else { sel.className = sel.className.replace(' selected', ''); that.value = that.last_val; next = 0; }
                     }
@@ -310,7 +320,12 @@ var autoComplete = (function(){
                 else if (key == 27) { that.value = that.last_val; that.sc.style.display = 'none'; }
                 // enter
                 else if (key == 13) {
-                    if (sel && that.sc.style.display != 'none') { o.onSelect(e, decodeURIComponent(sel.getAttribute('data-val')), sel); that.last_val = decodeURIComponent(sel.getAttribute('data-val')); that.nchild = 1; setTimeout(function(){ that.sc.style.display = 'none'; }, 20); }
+                    if (sel && that.sc.style.display != 'none') {
+                        o.onSelect(e, sel._value, sel);
+                        that.last_val = sel._value;
+                        that.nchild = 1;
+                        setTimeout(function(){ that.sc.style.display = 'none'; }, 20);
+                    }
                     return false;
                 }
             };
@@ -325,23 +340,23 @@ var autoComplete = (function(){
                     var val = that.value;
                     if (val.length >= o.minChars) {
                         //if (val != that.last_val) {
-                            that.last_val = val;
-                            clearTimeout(that.timer);
-                            if (o.cache) {
-                                if (val in that.cache) { suggest(that.cache[val],that.fullCache[val]); return; }
-                                // no requests if previous suggestions were empty
-                                for (var i=1; n = val.length - o.minChars, i < n; i++) {
-                                    var part = val.slice(0, val.length-i);
-                                    if (part in that.cache && !that.cache[part].length) { suggest([],[]); return; }
-                                }
+                        that.last_val = val;
+                        clearTimeout(that.timer);
+                        if (o.cache) {
+                            if (val in that.cache) { suggest(that.cache[val], that.fullCache[val]); return; }
+                            // no requests if previous suggestions were empty
+                            for (var i = 1; n = val.length - o.minChars, i < n; i++) {
+                                var part = val.slice(0, val.length - i);
+                                if (part in that.cache && !that.cache[part].length) { suggest([], []); return; }
                             }
-                            that.timer = setTimeout(function(){ o.source(val, suggest); }, o.delay);
+                        }
+                        that.timer = setTimeout(function(){ o.source(val, suggest); }, o.delay);
                         //}
                     } else {
                         if (key != 13) that.last_val = val;
                         that.sc.style.display = 'none';
                         document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","") + ' .nomatch').innerHTML = '';
-                        removeClass(document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","")),"marginbottom");
+                        removeClass(document.querySelector('#adc_' + that.id.replace("adc_","").replace("_input","")), "marginbottom");
                     }
                 }
             };
@@ -351,12 +366,12 @@ var autoComplete = (function(){
                 if (that.nchild > 1) that.keyupHandler(e);
             };
             //if (!o.minChars)
-                addEvent(that, 'focus', that.focusHandler);
+            addEvent(that, 'focus', that.focusHandler);
         }
 
         // public destroy method
         this.destroy = function(){
-            for (var i=0; n = elems.length, i < n; i++) {
+            for (var i = 0; n = elems.length, i < n; i++) {
                 var that = elems[i];
                 removeEvent(window, 'resize', that.updateSC);
                 removeEvent(that, 'blur', that.blurHandler);
@@ -381,6 +396,6 @@ var autoComplete = (function(){
     else if (typeof module !== 'undefined' && module.exports)
         module.exports = autoComplete;
     else
-      autoComplete.databases = {};
-      window.autoComplete = autoComplete;
+        autoComplete.databases = {};
+        window.autoComplete = autoComplete;
 })();
