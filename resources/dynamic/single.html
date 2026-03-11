@@ -34,12 +34,13 @@
     Dim safeInputValue = inputValue
     Dim safeInputSearchValue = inputSearchValue
     Dim safePlaceholder = placeholder
+    
 
 
     ' Escape for HTML attributes
-    safeInputValue = safeInputValue.Replace("&", "&amp;").Replace(Chr(34), "&quot;").Replace("<", "&lt;").Replace(">", "&gt;")
-    safeInputSearchValue = safeInputSearchValue.Replace("&", "&amp;").Replace(Chr(34), "&quot;").Replace("<", "&lt;").Replace(">", "&gt;")
-    safePlaceholder = safePlaceholder.Replace("&", "&amp;").Replace(Chr(34), "&quot;").Replace("<", "&lt;").Replace(">", "&gt;")
+    safeInputValue = safeInputValue.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;")
+    safeInputSearchValue = safeInputSearchValue.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;")
+    safePlaceholder = safePlaceholder.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;")
 %}
 
 <script type="text/javascript">
@@ -63,6 +64,20 @@
        autocomplete="off"
        name="adc_{%= CurrentADC.InstanceId %}_input"
        placeholder="{%:= safePlaceholder %}"
-       value="{%:= safeInputSearchValue %}" />
+       value="" />
+
+<span id="adc_{%= CurrentADC.InstanceId %}_text" style="display:none;">{%:= safeInputSearchValue %}</span>
+
+<script type="text/javascript">
+  window.value = '{%= selectOnHover %}';
+  (function () {
+      var input = document.getElementById("adc_{%= CurrentADC.InstanceId %}_input");
+      var text = document.getElementById("adc_{%= CurrentADC.InstanceId %}_text");
+      if (input && text) {
+          input.value = text.textContent || text.innerText || "";
+      }
+  })();
+</script>
+
 <button class="close-icon" type="reset"></button>
 <div class="nomatch"></div>
