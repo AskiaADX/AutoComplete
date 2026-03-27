@@ -108,6 +108,20 @@ var autoComplete = (function(){
            }
         }
 
+        function escapeHtmlAttr(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
+
+        function decodeHtmlAttr(value) {
+            var txt = document.createElement('textarea');
+            txt.innerHTML = value;
+            return txt.value;
+        }
+
         var o = {
             selector: 0,
             source: 0,
@@ -134,10 +148,10 @@ var autoComplete = (function(){
                 var excapedSearchSeparator = o.searchSeparator.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$]/g, "\\$&");
                 var splitRegExp = new RegExp(" |" + excapedSearchSeparator,"gi");
                 var re = new RegExp(search.split(splitRegExp).join('|').replace(/\\\|/gi, "|"), "gi");
-                return '<div class="autocomplete-suggestion" data-val="' + item + '" data-fullval="' + fullItem + '">' + item.toString().replace(re, function (x) {return "<b>" + x + "</b>";}) + '</div>';
+                return '<div class="autocomplete-suggestion" data-val="' + escapeHtmlAttr(item) + '" data-fullval="' + escapeHtmlAttr(fullItem) + '">' + item.toString().replace(re, function (x) {return "<b>" + x + "</b>";}) + '</div>';
             },
             onSelect: function(e, term, item){
-                var obj = JSON.parse(item.getAttribute('data-fullval'));
+                var obj = JSON.parse(decodeHtmlAttr(item.getAttribute('data-fullval')));
 
                 if (o.questionType === 'single') {
                     document.getElementById(options.inputName).value = obj.inputValue;
@@ -220,13 +234,13 @@ var autoComplete = (function(){
 
                 var selectOnHover = window.value;
                 if(selectOnHover == "yes"){
-                  that.value = this.getAttribute('data-val');
+                  that.value = decodeHtmlAttr(this.getAttribute('data-val'));
                 }
             }, that.sc);
 
             live('autocomplete-suggestion', 'mousedown', function(e){
                 if (hasClass(this, 'autocomplete-suggestion')) { // else outside click
-                    var v = this.getAttribute('data-val');
+                    var v = decodeHtmlAttr(this.getAttribute('data-val'));
                     that.value = v;
                     that.last_val = v;
                     that.nchild = 1;
@@ -267,7 +281,7 @@ var autoComplete = (function(){
                     // Auto select the only result found
                     if (options.autoSelect == 'yes' & data.length == 1) {
                       let firstData = that.sc.firstElementChild;
-                      var v = firstData.getAttribute('data-val');
+                      var v = decodeHtmlAttr(firstData.getAttribute('data-val'));
                       that.value = v;
                       that.last_val = v;
                       that.nchild = 1;
@@ -293,13 +307,13 @@ var autoComplete = (function(){
                     if (!sel) {
                         next = (key == 40) ? that.sc.querySelector('.autocomplete-suggestion') : that.sc.childNodes[that.sc.childNodes.length - 1]; // first : last
                         next.className += ' selected';
-                        that.value = next.getAttribute('data-val');
+                        that.value = decodeHtmlAttr(next.getAttribute('data-val'));
                     } else {
                         next = (key == 40) ? sel.nextSibling : sel.previousSibling;
                         if (next) {
                             sel.className = sel.className.replace(' selected', '');
                             next.className += ' selected';
-                            that.value = next.getAttribute('data-val');
+                            that.value = decodeHtmlAttr(next.getAttribute('data-val'));
                         }
                         else { sel.className = sel.className.replace(' selected', ''); that.value = that.last_val; next = 0; }
                     }
@@ -310,7 +324,12 @@ var autoComplete = (function(){
                 else if (key == 27) { that.value = that.last_val; that.sc.style.display = 'none'; }
                 // enter
                 else if (key == 13) {
-                    if (sel && that.sc.style.display != 'none') { o.onSelect(e, sel.getAttribute('data-val'), sel); that.last_val = sel.getAttribute('data-val'); that.nchild = 1; setTimeout(function(){ that.sc.style.display = 'none'; }, 20); }
+                    if (sel && that.sc.style.display != 'none') {
+                        o.onSelect(e, decodeHtmlAttr(sel.getAttribute('data-val')), sel);
+                        that.last_val = decodeHtmlAttr(sel.getAttribute('data-val'));
+                        that.nchild = 1;
+                        setTimeout(function(){ that.sc.style.display = 'none'; }, 20);
+                    }
                     return false;
                 }
             };

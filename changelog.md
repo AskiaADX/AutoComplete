@@ -19,3 +19,5 @@
     * v3.1.6 - 2021/03/31 - Prabath Gamage - json encode/parse issue fixed
   * v3.2.0 - 2021/11/10 - Prabath Gamage - Auto select when one result found
     * v3.2.1 - 2023/06/20 - Prabath Gamage - A tiny functional fix
+* v3.3.0 - 2026/06/10 - Jordan Grindle - overhaul of the JS and HTML files to allow the use of double quotes without breaking the control
+v3.3.1 - 2026/06/11 - Jordan Grindle - change of double quote syntax to accomodate 5.5 survey engine

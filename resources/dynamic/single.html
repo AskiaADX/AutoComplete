@@ -11,8 +11,7 @@
         autofocus = "autofocus"
     EndIf
 
-    Dim selectOnHover =  CurrentADC.PropValue("selectOnHover")
-
+    Dim selectOnHover = CurrentADC.PropValue("selectOnHover")
 
     ' Generate input fields
     inputName = CurrentQuestion.InputName()
@@ -26,25 +25,59 @@
     For idxA = 1 To arrAnswers.Count
         inputSearchValue = arrAnswers[idxA].Caption
     Next idxA
-  %}
 
-  <script type="text/javascript">
-    window.value = '{%= selectOnHover %}';
-  </script>
+    Dim highlightInput = CurrentADC.PropValue("highlightInputOnError")
+    Dim highlightConditionBlockingMessage = CurrentADC.PropValue("highlightConditionBlockingErrorMessage").ToLowerCase().Trim()
+    Dim highlightConditionNonBlockingMessage = CurrentADC.PropValue("highlightConditionNonBlockingErrorMessage").ToLowerCase().Trim()
+    Dim classHighlight = On(highlightInput = "yes" And highlightConditionBlockingMessage = "true"," blocking_errormessage",On(highlightInput = "yes" And highlightConditionNonBlockingMessage = "true"," nonblocking_errormessage",""))
+    Dim placeholder = CurrentADC.PropValue("placeholder")
+    Dim safeInputValue = inputValue
+    Dim safeInputSearchValue = inputSearchValue
+    Dim safePlaceholder = placeholder
+    
 
-  <input id="{%= inputId %}" aria-label="{%=inputId%}" class="autocomplete hiddens" type="text" autocomplete="off" name="{%= inputName%}" value="{%:= inputValue %}" />
 
-  <br />
-  {%
-  Dim highlightInput = CurrentADC.PropValue("highlightInputOnError")
-  Dim highlightConditionBlockingMessage = CurrentADC.PropValue("highlightConditionBlockingErrorMessage").ToLowerCase().Trim()
-  Dim highlightConditionNonBlockingMessage = CurrentADC.PropValue("highlightConditionNonBlockingErrorMessage").ToLowerCase().Trim()
-  Dim classHighlight = On(highlightInput = "yes" And highlightConditionBlockingMessage = "true"," blocking_errormessage",On(highlightInput = "yes" And highlightConditionNonBlockingMessage = "true"," nonblocking_errormessage",""))
-  Dim placeholder = CurrentADC.PropValue("placeholder")
-  %}
+    ' Escape for HTML attributes
+    safeInputValue = safeInputValue.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;")
+    safeInputSearchValue = safeInputSearchValue.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;")
+    safePlaceholder = safePlaceholder.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;")
+%}
 
-  <input id="adc_{%= CurrentADC.InstanceId %}_input" aria-label="{%:= placeholder %}"
-  class="autocomplete{%= classHighlight %}" {%= autofocus %} type="search" autocomplete="off" name="adc_{%= CurrentADC.InstanceId %}_input"
-  placeholder="{%:= placeholder %}" value="{%:= inputSearchValue %}" />
-  <button class="close-icon" type="reset"></button>
-  <div class="nomatch"></div>
+<script type="text/javascript">
+  window.value = '{%= selectOnHover %}';
+</script>
+
+<input id="{%= inputId %}"
+       aria-label="{%= inputId %}"
+       class="autocomplete hiddens"
+       type="text"
+       autocomplete="off"
+       name="{%= inputName %}"
+       value="{%:= safeInputValue %}" />
+<br />
+
+<input id="adc_{%= CurrentADC.InstanceId %}_input"
+       aria-label="{%:= safePlaceholder %}"
+       class="autocomplete{%= classHighlight %}"
+       {%= autofocus %}
+       type="search"
+       autocomplete="off"
+       name="adc_{%= CurrentADC.InstanceId %}_input"
+       placeholder="{%:= safePlaceholder %}"
+       value="" />
+
+<span id="adc_{%= CurrentADC.InstanceId %}_text" style="display:none;">{%:= safeInputSearchValue %}</span>
+
+<script type="text/javascript">
+  window.value = '{%= selectOnHover %}';
+  (function () {
+      var input = document.getElementById("adc_{%= CurrentADC.InstanceId %}_input");
+      var text = document.getElementById("adc_{%= CurrentADC.InstanceId %}_text");
+      if (input && text) {
+          input.value = text.textContent || text.innerText || "";
+      }
+  })();
+</script>
+
+<button class="close-icon" type="reset"></button>
+<div class="nomatch"></div>
